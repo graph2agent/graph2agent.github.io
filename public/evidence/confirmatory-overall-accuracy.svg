@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 960 600" role="img" aria-labelledby="chart-title chart-desc" data-experiment-id="G2A-CONF-20260806-001" data-evidence-manifest-sha256="d8581b91b20a441d9bb6ff810a5101e90b98223bb86463862ae3140459abf2d8" data-evidence-manifest-tsr-sha256="0f5a57be8d5f828a340670a132634949a869e95f60422ef3ae0e69fa34b0a7fe" data-report-sha256="17f6fae2fdc9a31671b90efcd6b28632d09abe85dd0d7627a718008736b72c87" data-verification-receipt-sha256="9642904fff399be6e84405264de9d9c916fd5ce8647091ce55743b28b3b4291f" data-frozen-source-tree-sha256="b1461d0062937c54929eb5aed218439a10bef5b0f6b6e36af08578119429ea4d" data-evidence-timestamp-utc="2026-08-06T23:27:05Z" data-confidence-level="0.95" data-bootstrap-replicates="100000" data-family-adjustment="Holm" data-family-alpha="0.05">
+  <title id="chart-title">Exact-answer accuracy on the confirmatory holdout</title>
+  <desc id="chart-desc">Plain Mermaid passed 209 of 330 contracts, 63.3 percent. Mermaid plus graph2agent digest passed 270 of 330, 81.8 percent. The paired increase was 18.5 percentage points.</desc>
+  <style>
+    .chart-bg{fill:#f6f8fa}.chart-title,.axis-title,.tick,.group-label,.value-label,.legend-label,.reference-label{fill:#24292f;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.chart-title{font-size:24px;font-weight:500}.subtitle,.note,.source{fill:#57606a;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.subtitle{font-size:15px}.note{font-size:14px}.source{font-size:12px}.axis-title{font-size:13px}.tick,.group-label,.legend-label,.reference-label{font-size:13px}.value-label{font-size:13px;font-weight:500}.grid{stroke:#d0d7de;stroke-width:1}.frame{fill:none;stroke:#8c959f;stroke-width:1}.reference{stroke:#57606a;stroke-width:2;stroke-dasharray:7 5}.bar{shape-rendering:geometricPrecision}.bar-mermaid{fill:#0969da}.bar-digest{fill:#1a7f37}.bar-both-pass{fill:#8250df}.bar-both-fail{fill:#6e7781}
+  </style>
+  <rect class="chart-bg" x="0" y="0" width="960" height="600"/>
+  <text class="chart-title" x="28" y="38">Exact-answer accuracy on the confirmatory holdout</text>
+  <text class="subtitle" x="28" y="65">330 paired contracts · same tasks and exact scorer</text>
+  <text class="note" x="28" y="91">+18.5 percentage points · paired 95% CI +14.2 to +22.7 · two-sided McNemar p=8.67e-19</text>
+  <line class="grid" x1="88.0" y1="490.0" x2="928.0" y2="490.0"/>
+  <text class="tick" text-anchor="end" x="78.0" y="494.0">0%</text>
+  <line class="grid" x1="88.0" y1="406.2" x2="928.0" y2="406.2"/>
+  <text class="tick" text-anchor="end" x="78.0" y="410.2">25%</text>
+  <line class="grid" x1="88.0" y1="322.5" x2="928.0" y2="322.5"/>
+  <text class="tick" text-anchor="end" x="78.0" y="326.5">50%</text>
+  <line class="grid" x1="88.0" y1="238.8" x2="928.0" y2="238.8"/>
+  <text class="tick" text-anchor="end" x="78.0" y="242.8">75%</text>
+  <line class="grid" x1="88.0" y1="155.0" x2="928.0" y2="155.0"/>
+  <text class="tick" text-anchor="end" x="78.0" y="159.0">100%</text>
+  <rect class="frame" x="88.0" y="155.0" width="840.0" height="335.0"/>
+  <rect class="bar bar-mermaid" x="261.0" y="277.8" width="74.0" height="212.2" data-series="mermaid" data-passed="209" data-total="330">
+    <title>mermaid: 209 of 330, 63.3 percent</title>
+  </rect>
+  <text class="value-label" text-anchor="middle" x="298.0" y="268.8">209/330 · 63.3%</text>
+  <text class="group-label" text-anchor="middle" x="298.0" y="518">Plain Mermaid</text>
+  <rect class="bar bar-digest" x="681.0" y="215.9" width="74.0" height="274.1" data-series="digest" data-passed="270" data-total="330">
+    <title>digest: 270 of 330, 81.8 percent</title>
+  </rect>
+  <text class="value-label" text-anchor="middle" x="718.0" y="206.9">270/330 · 81.8%</text>
+  <text class="group-label" text-anchor="middle" x="718.0" y="518">Mermaid + digest</text>
+  <text class="axis-title" text-anchor="middle" x="508.0" y="552">Requirement representation</text>
+  <text class="axis-title" text-anchor="middle" transform="translate(23 322.5) rotate(-90)">Exact-answer accuracy (%)</text>
+  <text class="source" x="28" y="582">Source: G2A-CONF-20260806-001 · final evidence d8581b91b20a… · requested gpt-5.6-sol</text>
+</svg>

@@ -1,0 +1,118 @@
+{
+  "schema_version": "graph2agent-benchmark-chart-data-v2",
+  "experiment_id": "G2A-CONF-20260806-001",
+  "evidence_manifest_sha256": "d8581b91b20a441d9bb6ff810a5101e90b98223bb86463862ae3140459abf2d8",
+  "evidence_manifest_tsr_sha256": "0f5a57be8d5f828a340670a132634949a869e95f60422ef3ae0e69fa34b0a7fe",
+  "report_sha256": "17f6fae2fdc9a31671b90efcd6b28632d09abe85dd0d7627a718008736b72c87",
+  "verification_receipt_sha256": "9642904fff399be6e84405264de9d9c916fd5ce8647091ce55743b28b3b4291f",
+  "frozen_source_tree_sha256": "b1461d0062937c54929eb5aed218439a10bef5b0f6b6e36af08578119429ea4d",
+  "timestamp_utc": "2026-08-06T23:27:05Z",
+  "execution": {
+    "provider": "codex",
+    "requested_model": "gpt-5.6-sol",
+    "client_version": "codex-cli 0.146.1",
+    "reasoning_effort": "high",
+    "resolved_model_available": false
+  },
+  "analysis": {
+    "confidence_level": 0.95,
+    "bootstrap_replicates": 100000,
+    "mcnemar_sidedness": "two-sided",
+    "family_adjustment": "Holm",
+    "family_alpha": 0.05
+  },
+  "verdict": {
+    "efficacy": "EFFICACY_PASS",
+    "practical_correctness": "PASS",
+    "promotion": "EFFICACY_ONLY_NO_PROMOTE",
+    "cost_available": false
+  },
+  "overall": {
+    "total": 330,
+    "mermaid_passed": 209,
+    "digest_passed": 270,
+    "both_pass": 209,
+    "both_fail": 60,
+    "mermaid_only_pass": 0,
+    "digest_only_pass": 61,
+    "absolute_effect": 0.18484848484848485,
+    "bootstrap_lower": 0.14242424242424243,
+    "bootstrap_upper": 0.22727272727272727,
+    "mcnemar_exact_two_sided_p": 8.673617379884035e-19
+  },
+  "resources": {
+    "input_tokens": {
+      "mermaid": 3763979,
+      "digest": 4071493
+    },
+    "output_tokens": {
+      "mermaid": 184612,
+      "digest": 158520
+    },
+    "reasoning_output_tokens": {
+      "mermaid": 57188,
+      "digest": 30712
+    },
+    "selected_duration_ms": {
+      "mermaid": 5929798,
+      "digest": 5486265
+    }
+  },
+  "families": [
+    {
+      "label": "Class",
+      "total": 66,
+      "mermaid_passed": 0,
+      "digest_passed": 10,
+      "holm_adjusted_p": 0.0078125
+    },
+    {
+      "label": "ER",
+      "total": 66,
+      "mermaid_passed": 63,
+      "digest_passed": 66,
+      "holm_adjusted_p": 0.7500000000000002
+    },
+    {
+      "label": "Flowchart",
+      "total": 66,
+      "mermaid_passed": 66,
+      "digest_passed": 66,
+      "holm_adjusted_p": 1
+    },
+    {
+      "label": "Sequence",
+      "total": 66,
+      "mermaid_passed": 14,
+      "digest_passed": 62,
+      "holm_adjusted_p": 3.552713678800511e-14
+    },
+    {
+      "label": "State",
+      "total": 66,
+      "mermaid_passed": 66,
+      "digest_passed": 66,
+      "holm_adjusted_p": 1
+    }
+  ],
+  "complexities": [
+    {
+      "label": "Small",
+      "total": 74,
+      "mermaid_passed": 71,
+      "digest_passed": 74
+    },
+    {
+      "label": "Medium",
+      "total": 153,
+      "mermaid_passed": 83,
+      "digest_passed": 134
+    },
+    {
+      "label": "Large",
+      "total": 103,
+      "mermaid_passed": 55,
+      "digest_passed": 62
+    }
+  ]
+}
