@@ -179,7 +179,7 @@ Interpretation limits
             <li>
               <span class="step">03</span>
               <h3>GitHub automation</h3>
-              <p>Check every pull request or open a focused update PR when Mermaid diagrams change.</p>
+              <p>Check every pull request or update the runner working tree for review when Mermaid diagrams change.</p>
               <code>graph2agent/github-action</code>
             </li>
           </ol>
@@ -234,7 +234,7 @@ Interpretation limits
           <p><strong>{((inputRatio - 1) * 100).toFixed(2)}%</strong><span>more input tokens</span></p>
           <p><strong>{((1 - reasoningRatio) * 100).toFixed(2)}%</strong><span>fewer reasoning-output tokens</span></p>
           <p><strong>Unavailable</strong><span>provider monetary cost</span></p>
-          <p><strong>EFFICACY_ONLY</strong><span>exact release verdict</span></p>
+          <p><strong>{evidence.verdict.promotion}</strong><span>exact release verdict</span></p>
         </div>
       </section>
 
@@ -257,7 +257,7 @@ Interpretation limits
         <h2 id="cta-title">Make your next README agent-readable.</h2>
         <div>
           <a class="button button-primary" href="https://github.com/graph2agent/graph2agent">Open graph2agent</a>
-          <code>go install github.com/graph2agent/graph2agent/cmd/graph2agent@latest</code>
+          <code>go install github.com/graph2agent/graph2agent/cmd/graph2agent@v0.1.0</code>
         </div>
       </section>
     </main>
