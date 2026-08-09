@@ -2,6 +2,15 @@ name: Deploy GitHub Pages
 
 on:
   workflow_dispatch:
+    inputs:
+      confirm-publication:
+        description: Type PUBLISH_PUBLICLY to confirm this organization site will be public.
+        required: true
+        type: choice
+        default: DO_NOT_DEPLOY
+        options:
+          - DO_NOT_DEPLOY
+          - PUBLISH_PUBLICLY
 
 permissions:
   contents: read
@@ -14,6 +23,7 @@ concurrency:
 
 jobs:
   build:
+    if: github.ref == 'refs/heads/main' && inputs.confirm-publication == 'PUBLISH_PUBLICLY'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:

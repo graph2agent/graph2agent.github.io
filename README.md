@@ -29,9 +29,10 @@ unpublished oracle material belong in this repository or its generated bundle.
 ## Publishing
 
 The repository and all builds remain private for now. The Pages workflow is
-manual-only. Do not run it until public visibility is intended: GitHub does not
-offer private access control for an organization Pages site, and a private
-repository does not make that site private.
+manual-only, accepts only the `main` branch, and requires the explicit
+`PUBLISH_PUBLICLY` confirmation. Do not run it until public visibility is
+intended: GitHub does not offer private access control for an organization
+Pages site, and a private repository does not make that site private.
 
 When publication is approved, enable GitHub Actions as the Pages source in the
 repository settings, run **Deploy GitHub Pages**, and then add the default-
