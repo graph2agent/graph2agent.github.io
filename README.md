@@ -18,6 +18,8 @@ the checked-in aggregate evidence JSON.
 
 [Apache-2.0 license](LICENSE.md)
 
+[LLM-oriented project index](https://graph2agent.github.io/llms.txt)
+
 ```sh
 brew install graph2agent/tap/graph2agent
 # Pending publication of the npm umbrella package:

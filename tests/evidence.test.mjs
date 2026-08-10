@@ -6,6 +6,7 @@ const evidence = JSON.parse(
   await readFile(new URL("../src/data/evidence.json", import.meta.url), "utf8"),
 );
 const page = await readFile(new URL("../src/pages/index.astro", import.meta.url), "utf8");
+const llms = await readFile(new URL("../public/llms.txt", import.meta.url), "utf8");
 const packageManifest = JSON.parse(
   await readFile(new URL("../package.json", import.meta.url), "utf8"),
 );
@@ -66,6 +67,37 @@ test("public launch metadata exposes the brand and Apache license", () => {
   assert.match(page, /name="twitter:card" content="summary"/);
   assert.match(page, /<img class="brand-mark" src="\/favicon\.svg" alt=""/);
   assert.match(page, /href="\/LICENSE\.txt">License<\/a>/);
+  assert.match(page, /rel="describedby" href="\/llms\.txt"/);
+  assert.match(page, /href="\/llms\.txt">llms\.txt<\/a>/);
   assert.doesNotMatch(page, /github\.com\/graph2agent\/research/);
   assert.doesNotMatch(page, /Public distribution activation pending/);
+});
+
+test("llms.txt is a concise public and evidence-bounded project index", () => {
+  assert.ok(!llms.startsWith("\uFEFF"), "llms.txt must not include a byte-order mark");
+  assert.match(llms, /^# graph2agent\n\n> graph2agent is an Apache-2\.0 deterministic compiler/);
+  assert.equal(llms.match(/^# /gm)?.length, 1);
+
+  const sections = llms.split(/^## /m).slice(1);
+  assert.ok(sections.length >= 4);
+  for (const section of sections) {
+    const [title, ...body] = section.trim().split("\n");
+    assert.ok(title.length > 0);
+    for (const line of body.filter((value) => value.length > 0)) {
+      assert.match(line, /^- \[[^\]]+\]\(https:\/\/[^)]+\): .+$/);
+    }
+  }
+
+  assert.match(llms, /graph2agent describe --profile interpreted-v3 FILE\|-/);
+  assert.match(llms, /graph2agent update \./);
+  assert.match(llms, /Core v0\.2\.1, GitHub Action v0\.3\.0, Homebrew, and direct Debian downloads are public/);
+  assert.match(llms, /MCP v0\.2\.0 one-command npm package and signed APT repository are not yet live/);
+  assert.match(llms, new RegExp(`frozen paired benchmark of ${evidence.overall.total} private contracts`));
+  assert.match(llms, new RegExp(`${evidence.overall.digest_passed}/${evidence.overall.total} exact versus ${evidence.overall.mermaid_passed}/${evidence.overall.total}`));
+  assert.match(llms, /\+18\.48 percentage points and 50\.41% relative failure reduction/);
+  assert.match(llms, /does not by itself establish broader model, task, profile, Mermaid-construct, or production generalization/);
+  assert.match(llms, /Provider monetary cost was unavailable, not zero/);
+  assert.doesNotMatch(llms, /github\.com\/graph2agent\/research/);
+  assert.doesNotMatch(llms, /50(?:\.41)?% (?:more accurate|higher accuracy)/i);
+  assert.ok(llms.length < 8_000, `llms.txt is too large: ${llms.length} bytes`);
 });

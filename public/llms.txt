@@ -1,0 +1,35 @@
+# graph2agent
+
+> graph2agent is an Apache-2.0 deterministic compiler that converts supported Mermaid diagrams into rich, agent-readable text and canonical semantic JSON without calling an LLM.
+
+Use core v0.2.1 with strict parsing unless explicitly exploring partial input. For the richest single-diagram prose, pass one raw Mermaid source or one triple-backtick Mermaid fence to `graph2agent describe --profile interpreted-v3 FILE|-`. For repository-wide context, run `graph2agent update .`; it writes deterministic hidden context immediately after supported Mermaid fences. Do not infer executable behavior from layout, styling, shapes, or unlabeled relationships.
+
+Core v0.2.1, GitHub Action v0.3.0, Homebrew, and direct Debian downloads are public. The MCP v0.2.0 one-command npm package and signed APT repository are not yet live.
+
+On one frozen paired benchmark of 330 private contracts in one requested Codex configuration, Mermaid plus the frozen `standard` digest passed 270/330 exact versus 209/330 with Mermaid alone: +18.48 percentage points and 50.41% relative failure reduction. This result does not by itself establish broader model, task, profile, Mermaid-construct, or production generalization. Provider monetary cost was unavailable, not zero.
+
+## Documentation
+
+- [Core README](https://raw.githubusercontent.com/graph2agent/graph2agent/v0.2.1/README.md): CLI quick start, supported Mermaid families, library API, design guarantees, and current semantic boundaries.
+- [Installation guide](https://raw.githubusercontent.com/graph2agent/graph2agent/v0.2.1/docs/install.md): Homebrew, Go, release archive, and direct Debian installation instructions.
+- [Architecture](https://raw.githubusercontent.com/graph2agent/graph2agent/v0.2.1/docs/architecture.md): Deterministic parser, canonical IR, narrative compiler, and Markdown annotation design.
+- [Generated Markdown contract](https://raw.githubusercontent.com/graph2agent/graph2agent/v0.2.1/docs/generated-block-format.md): Owned-block format, freshness hashes, escaping, and compatibility rules.
+
+## Agent interfaces and automation
+
+- [MCP server](https://raw.githubusercontent.com/graph2agent/mcp/v0.2.0/README.md): Read-only `describe_mermaid` tool, client configuration, package status, limits, and security model.
+- [GitHub Action](https://raw.githubusercontent.com/graph2agent/github-action/v0.3.0/README.md): Merge freshness gate and scheduled maintenance workflow for generated Mermaid context.
+- [Examples](https://raw.githubusercontent.com/graph2agent/examples/main/README.md): Reproducible CLI, library, merge-gate, and daily refresh examples.
+
+## Evidence and limits
+
+- [Public evidence page](https://graph2agent.github.io/#evidence): Headline paired result, resource measurements, and explicit generalization limits.
+- [Aggregate evidence JSON](https://raw.githubusercontent.com/graph2agent/graph2agent.github.io/main/src/data/evidence.json): Public machine-readable aggregate used to generate and test the evidence page.
+- [Benchmark repository](https://raw.githubusercontent.com/graph2agent/benchmarks/main/README.md): Public benchmark harness, corpus contracts, verification commands, and evidence policy.
+- [Evaluation protocol](https://raw.githubusercontent.com/graph2agent/benchmarks/main/docs/evaluation.md): Paired scoring, statistical analysis, provider boundaries, and reproducibility requirements.
+
+## Distribution and licensing
+
+- [Core v0.2.1 release](https://github.com/graph2agent/graph2agent/releases/tag/v0.2.1): Checksums, attestations, platform archives, and amd64/arm64 Debian packages.
+- [Homebrew tap](https://raw.githubusercontent.com/graph2agent/homebrew-tap/main/README.md): Homebrew installation and formula verification details.
+- [Apache-2.0 license](https://graph2agent.github.io/LICENSE.txt): License for the public graph2agent site and released public project surfaces.
