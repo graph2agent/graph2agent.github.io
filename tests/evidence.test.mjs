@@ -25,12 +25,25 @@ test("headline metrics derive from the committed aggregate", () => {
   );
   assert.equal(evidence.verdict.promotion, "EFFICACY_ONLY_NO_PROMOTE");
   assert.equal(evidence.verdict.cost_available, false);
+  assert.equal(evidence.resources.output_tokens.mermaid, 184_612);
+  assert.equal(evidence.resources.output_tokens.digest, 158_520);
+  assert.equal(
+    (100 * (1 - evidence.resources.output_tokens.digest / evidence.resources.output_tokens.mermaid)).toFixed(2),
+    "14.13",
+  );
 });
 
 test("site copy retains the evidence boundary", () => {
   assert.match(page, /not by\s+itself prove broader model, task, or production generalization/);
   assert.match(page, /unavailable—not zero/);
-  assert.match(page, /\{evidence\.verdict\.promotion\}<\/strong><span>exact release verdict/);
+  assert.match(page, /Observed aggregate token counts/);
+  assert.match(page, /Mermaid \+ graph2agent relative to\s+Mermaid-only/);
+  assert.match(page, /const outputRatio = evidence\.resources\.output_tokens\.digest/);
+  assert.match(page, /\{\(\(1 - outputRatio\) \* 100\)\.toFixed\(2\)\}%<\/strong><span>fewer output tokens/);
+  assert.doesNotMatch(page, /provider monetary cost/);
+  assert.doesNotMatch(page, /exact release verdict/);
+  assert.doesNotMatch(page, /\{evidence\.verdict\.promotion\}/);
+  assert.doesNotMatch(page, /EFFICACY_ONLY_NO_PROMOTE/);
   assert.doesNotMatch(page, /<strong>EFFICACY_ONLY<\/strong>/);
   assert.doesNotMatch(page, /50% more accurate/i);
   assert.doesNotMatch(page, /50\.41% higher accuracy/i);

@@ -11,6 +11,7 @@ const failureReduction =
     (evidence.overall.total - evidence.overall.digest_passed)) /
   (evidence.overall.total - evidence.overall.mermaid_passed);
 const inputRatio = evidence.resources.input_tokens.digest / evidence.resources.input_tokens.mermaid;
+const outputRatio = evidence.resources.output_tokens.digest / evidence.resources.output_tokens.mermaid;
 const reasoningRatio =
   evidence.resources.reasoning_output_tokens.digest /
   evidence.resources.reasoning_output_tokens.mermaid;
@@ -276,11 +277,14 @@ Interpretation limits
           </figcaption>
         </figure>
 
-        <div class="resource-strip" aria-label="Selected run resources">
+        <p class="resource-caption">
+          <strong>Observed aggregate token counts.</strong> Mermaid + graph2agent relative to
+          Mermaid-only across the same {evidence.overall.total} paired cases.
+        </p>
+        <div class="resource-strip" aria-label="Observed aggregate token counts">
           <p><strong>{((inputRatio - 1) * 100).toFixed(2)}%</strong><span>more input tokens</span></p>
+          <p><strong>{((1 - outputRatio) * 100).toFixed(2)}%</strong><span>fewer output tokens</span></p>
           <p><strong>{((1 - reasoningRatio) * 100).toFixed(2)}%</strong><span>fewer reasoning-output tokens</span></p>
-          <p><strong>Unavailable</strong><span>provider monetary cost</span></p>
-          <p><strong>{evidence.verdict.promotion}</strong><span>exact release verdict</span></p>
         </div>
       </section>
 
