@@ -1,8 +1,23 @@
-# graph2agent.github.io
+# Publish the measured graph2agent result—with the caveats attached
 
-Private source for the graph2agent product and evidence site. The site explains
-the Mermaid-to-agent-context workflow, shows an illustrative compilation, and
-derives every benchmark headline from the checked-in aggregate evidence JSON.
+> **Measured: 50.41% fewer exact-comprehension failures.** On one frozen,
+> paired benchmark of 330 private contracts, Mermaid plus graph2agent's
+> `standard` digest scored 270/330 exact versus 209/330 with Mermaid alone
+> (+18.48 percentage points; 61 digest-only wins and 0 Mermaid-only wins).
+
+This is the private source for the graph2agent product and evidence site. The
+page leads with that measured result, keeps its model/task/profile limits in
+view, and advertises the staged Homebrew, signed APT, one-command MCP, merge
+gate, and daily refresh-PR surfaces. Every headline derives from the checked-in
+aggregate evidence JSON.
+
+```sh
+brew install graph2agent/tap/graph2agent
+npx -y graph2agent-mcp@0.2.0
+```
+
+Those commands activate only after the redistribution license and public
+release gates are approved.
 
 ## Development
 
