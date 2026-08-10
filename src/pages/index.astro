@@ -24,18 +24,18 @@ const year = new Date().getUTCFullYear();
     <meta name="viewport" content="width=device-width" />
     <meta
       name="description"
-      content="graph2agent turns Mermaid diagrams into deterministic, agent-readable context and keeps it hidden beside the diagram in Markdown."
+      content="graph2agent cut exact Mermaid-comprehension failures by 50.41% in one frozen paired benchmark. Install the CLI, run the MCP server with npx, and keep generated context current in GitHub."
     />
     <meta name="theme-color" content="#11130f" />
-    <meta property="og:title" content="graph2agent — Give agents the graph" />
+    <meta property="og:title" content="graph2agent — 50.41% fewer exact-comprehension failures" />
     <meta
       property="og:description"
-      content="Deterministic Mermaid-to-agent context, with measured comprehension evidence."
+      content="A deterministic Mermaid digest, measured on 330 private contracts, with CLI, MCP, merge-gate, and daily PR surfaces."
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://graph2agent.github.io/" />
     <link rel="canonical" href="https://graph2agent.github.io/" />
-    <title>graph2agent — Give agents the graph</title>
+    <title>graph2agent — 50.41% fewer exact-comprehension failures</title>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -56,20 +56,22 @@ const year = new Date().getUTCFullYear();
     <main id="main">
       <section id="top" class="hero shell" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="eyebrow"><span></span> deterministic context for coding agents</p>
-          <h1 id="hero-title">Give agents the graph.<br /><em>Not just the drawing.</em></h1>
+          <p class="eyebrow"><span></span> measured on 330 frozen, paired contracts</p>
+          <h1 id="hero-title">50.41% fewer failures.<br /><em>Give agents the graph.</em></h1>
           <p class="hero-lede">
-            graph2agent compiles Mermaid into explicit, redundant text an agent can follow—and
-            stores it invisibly beside the diagram in your Markdown.
+            Mermaid plus graph2agent's frozen <code>standard</code> digest cut exact-comprehension
+            failures from 121 to 60 in one benchmark. Compile the same deterministic context in
+            <code>make generate</code>, expose it to agents with one <code>npx</code> command, and
+            keep repositories current with a merge gate or daily bot PR.
           </p>
           <div class="hero-actions">
-            <a class="button button-primary" href="https://github.com/graph2agent/graph2agent">Explore the library</a>
-            <a class="button button-secondary" href="#comparison">See the difference <span aria-hidden="true">↓</span></a>
+            <a class="button button-primary" href="#how">Get the commands</a>
+            <a class="button button-secondary" href="#evidence">Audit the result <span aria-hidden="true">↓</span></a>
           </div>
-          <ul class="hero-facts" aria-label="Product characteristics">
-            <li>Pure Go</li>
-            <li>No model call</li>
-            <li>Deterministic output</li>
+          <ul class="hero-facts" aria-label="Benchmark characteristics">
+            <li>61 digest-only wins</li>
+            <li>0 Mermaid-only wins</li>
+            <li>+18.48 percentage points</li>
           </ul>
         </div>
 
@@ -100,7 +102,7 @@ graph2agent:end --&gt;</code></pre>
         <div class="shell signal-grid">
           <p class="signal-number">+{exactLift.toFixed(2)}<span>pp</span></p>
           <p class="signal-copy">
-            exact contract-comprehension lift in one preregistered, paired benchmark of
+            exact contract-comprehension lift in one frozen, paired benchmark of
             <strong>{evidence.overall.total} private contracts</strong>
           </p>
           <a href="#evidence">Read the evidence boundary <span aria-hidden="true">→</span></a>
@@ -160,27 +162,37 @@ Interpretation limits
       <section id="how" class="section section-dark" aria-labelledby="how-title">
         <div class="shell">
           <div class="section-heading inverse">
-            <p class="kicker">One compiler, three surfaces</p>
-            <h2 id="how-title">Use it where the diagram lives.</h2>
+            <p class="kicker">One compiler, four launch surfaces</p>
+            <h2 id="how-title">Generate once. Keep every consumer current.</h2>
+            <p class="activation-note">
+              The <code>v0.2.0</code> distribution commands are staged and activate with the
+              approved public release.
+            </p>
           </div>
           <ol class="surface-grid">
             <li>
               <span class="step">01</span>
-              <h3>Repository CLI</h3>
-              <p>Run at the root or target one Markdown file. Existing agent blocks are refreshed in place.</p>
-              <code>graph2agent update .</code>
+              <h3>Install, then generate</h3>
+              <p>Install with Homebrew or the signed APT repository, then put the deterministic update after your existing generators.</p>
+              <code>brew install graph2agent/tap/graph2agent<br />sudo apt-get install graph2agent<br />make generate</code>
             </li>
             <li>
               <span class="step">02</span>
-              <h3>Agent tool</h3>
-              <p>Give any MCP-capable agent a Mermaid contract and receive structured, deterministic context.</p>
-              <code>describe_mermaid</code>
+              <h3>Plug-and-play MCP</h3>
+              <p>Give an MCP-capable agent the tool without manually downloading or compiling a native binary.</p>
+              <code>npx -y graph2agent-mcp@0.2.0</code>
             </li>
             <li>
               <span class="step">03</span>
-              <h3>GitHub automation</h3>
-              <p>Check every pull request or update the runner working tree for review when Mermaid diagrams change.</p>
-              <code>graph2agent/github-action</code>
+              <h3>Block stale merges</h3>
+              <p>Make a read-only <code>graph2agent check .</code> job required before a pull request can merge.</p>
+              <code>uses: graph2agent/github-action</code>
+            </li>
+            <li>
+              <span class="step">04</span>
+              <h3>Let the bot maintain it</h3>
+              <p>Run daily, change only generated Markdown context, and reuse one focused refresh PR until it merges.</p>
+              <code>schedule → refresh branch → PR</code>
             </li>
           </ol>
         </div>
@@ -193,7 +205,7 @@ Interpretation limits
             <h2 id="evidence-title">The digest helped on the frozen task set.</h2>
           </div>
           <p>
-            The preregistered paired result supports efficacy on this benchmark. It does not by
+            The frozen paired result supports efficacy on this benchmark. It does not by
             itself prove broader model, task, or production generalization.
           </p>
         </div>
@@ -254,16 +266,17 @@ Interpretation limits
 
       <section class="final-cta shell" aria-labelledby="cta-title">
         <p class="kicker">Keep the diagram. Add the contract.</p>
-        <h2 id="cta-title">Make your next README agent-readable.</h2>
+        <h2 id="cta-title">Put the graph in every agent's path.</h2>
         <div>
           <a class="button button-primary" href="https://github.com/graph2agent/graph2agent">Open graph2agent</a>
-          <code>go install github.com/graph2agent/graph2agent/cmd/graph2agent@v0.1.0</code>
+          <code>brew install graph2agent/tap/graph2agent</code>
+          <code>npx -y graph2agent-mcp@0.2.0</code>
         </div>
       </section>
     </main>
 
     <footer class="site-footer shell">
-      <p>© {year} graph2agent. Private preview.</p>
+      <p>© {year} graph2agent. Public distribution activation pending.</p>
       <div>
         <a href="https://github.com/graph2agent/research">Research</a>
         <a href="https://github.com/graph2agent/benchmarks">Benchmarks</a>

@@ -27,17 +27,16 @@ test("site copy retains the evidence boundary", () => {
   assert.doesNotMatch(page, /<strong>EFFICACY_ONLY<\/strong>/);
   assert.doesNotMatch(page, /50% more accurate/i);
   assert.doesNotMatch(page, /50\.41% higher accuracy/i);
+  assert.doesNotMatch(page, /preregistered/i);
 });
 
 test("product instructions match the staged release surfaces", () => {
-  assert.match(
-    page,
-    /Check every pull request or update the runner working tree for review when Mermaid diagrams change\./,
-  );
-  assert.doesNotMatch(page, /open a focused update PR/i);
-  assert.match(
-    page,
-    /go install github\.com\/graph2agent\/graph2agent\/cmd\/graph2agent@v0\.1\.0/,
-  );
+  assert.match(page, /brew install graph2agent\/tap\/graph2agent/);
+  assert.match(page, /sudo apt-get install graph2agent/);
+  assert.match(page, /npx -y graph2agent-mcp@0\.2\.0/);
+  assert.match(page, /graph2agent check \./);
+  assert.match(page, /focused refresh PR/);
+  assert.match(page, /distribution commands are staged and activate with the\s+approved public release/);
+  assert.doesNotMatch(page, /@v0\.1\.0/);
   assert.doesNotMatch(page, /graph2agent@latest/);
 });

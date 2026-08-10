@@ -92,8 +92,10 @@ h1 em { font-family: Georgia, "Times New Roman", serif; font-weight: 400; letter
 
 .section-dark { background: var(--ink); color: var(--paper-bright); }
 .inverse .kicker { color: var(--acid); }
-.inverse { display: block; }
-.surface-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin: 0; padding: 1px; list-style: none; background: #45483f; border: 1px solid #45483f; }
+.inverse { display: grid; grid-template-columns: 1.2fr .8fr; align-items: end; }
+.activation-note { max-width: 34rem; margin: 0; color: #b9bdb1; }
+.activation-note code { color: var(--acid); }
+.surface-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; margin: 0; padding: 1px; list-style: none; background: #45483f; border: 1px solid #45483f; }
 .surface-grid li { padding: 2rem; background: var(--ink); }
 .surface-grid .step { color: var(--coral); font: 700 .72rem/1 monospace; }
 .surface-grid h3 { margin: 3rem 0 .8rem; font-size: 1.45rem; }
@@ -140,7 +142,7 @@ h1 em { font-family: Georgia, "Times New Roman", serif; font-weight: 400; letter
 
 @media (max-width: 900px) {
   nav a:not(.nav-cta) { display: none; }
-  .hero, .section-heading, .evidence-heading, .limits { grid-template-columns: 1fr; gap: 2.5rem; }
+  .hero, .section-heading, .evidence-heading, .inverse, .limits { grid-template-columns: 1fr; gap: 2.5rem; }
   .hero-demo { max-width: 44rem; transform: none; }
   .signal-grid { grid-template-columns: auto 1fr; }
   .signal-grid a { grid-column: 1 / -1; }
