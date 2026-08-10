@@ -37,6 +37,25 @@ test("site copy retains the evidence boundary", () => {
   assert.doesNotMatch(page, /preregistered/i);
 });
 
+test("the first screen explains the product before presenting proof", () => {
+  assert.match(page, /graph2agent — Mermaid diagrams, explained for agents/);
+  assert.match(page, /Mermaid in · graph2agent · explicit context out/);
+  assert.match(page, /Mermaid diagrams,<br \/><em>explained for agents\.<\/em>/);
+  assert.match(page, /graph2agent turns Mermaid diagrams into explicit text for coding agents/);
+  assert.match(page, /Keep the\s+diagram for people; add deterministic context/);
+  assert.match(page, /Humans can scan the\s+picture visually/);
+  assert.match(page, /must reconstruct those\s+relationships from compact syntax/);
+  assert.match(page, /elements, connections,\s+branches, order, topology/);
+  assert.match(page, /Diagram stays for humans/);
+  assert.match(page, /Rich text goes to agents/);
+  assert.match(page, /Deterministic · no model call/);
+  assert.match(page, /diagram \+ generated context/);
+  assert.match(page, /Agent explanation · hidden in rendered Markdown/);
+  assert.match(page, /Branch candidate: `Authorized\?`/);
+  assert.match(page, /Humans see the picture\.<br \/>Agents need the structure spelled out/);
+  assert.doesNotMatch(page, /Give agents the graph/);
+});
+
 test("product instructions match the staged release surfaces", () => {
   assert.match(page, /brew install graph2agent\/tap\/graph2agent/);
   assert.match(page, /releases\/tag\/v0\.2\.1/);
@@ -48,7 +67,7 @@ test("product instructions match the staged release surfaces", () => {
   assert.match(page, /focused refresh PR/);
   assert.match(page, /Core <code>v0\.2\.1<\/code>, Action <code>v0\.3\.0<\/code>, Homebrew, and direct Debian downloads are public/);
   assert.match(page, /MCP <code>v0\.2\.0<\/code> is prepared for npm publication/);
-  assert.match(page, /MCP <code>v0\.2\.0<\/code> activates through one <code>npx<\/code> command after npm publication/);
+  assert.match(page, /graph2agent describe --profile interpreted-v3 -/);
   assert.match(page, /npm pending → npx -y graph2agent-mcp@0\.2\.0/);
   assert.match(page, /uses: graph2agent\/github-action\/\.github\/workflows\/check-markdown\.yml@/);
   assert.match(page, /uses: graph2agent\/github-action\/\.github\/workflows\/maintain-markdown\.yml@/);

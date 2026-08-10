@@ -24,13 +24,13 @@ const year = new Date().getUTCFullYear();
     <meta name="viewport" content="width=device-width" />
     <meta
       name="description"
-      content="graph2agent cut exact Mermaid-comprehension failures by 50.41% in one frozen paired benchmark. Core v0.2.1 and Action v0.3.0 are live; MCP v0.2.0 npm publication is pending."
+      content="graph2agent turns supported Mermaid diagrams into deterministic rich text that coding agents can follow. Measured: 50.41% fewer exact-comprehension failures in one frozen paired benchmark."
     />
     <meta name="theme-color" content="#11130f" />
-    <meta property="og:title" content="graph2agent — 50.41% fewer exact-comprehension failures" />
+    <meta property="og:title" content="graph2agent — Mermaid diagrams, explained for agents" />
     <meta
       property="og:description"
-      content="A deterministic Mermaid digest measured on 330 private contracts. Core v0.2.1 and Action v0.3.0 are live; MCP v0.2.0 npm publication is pending."
+      content="Turn compact Mermaid into explicit, deterministic text for coding agents. Measured: 50.41% fewer exact-comprehension failures in one frozen paired benchmark."
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://graph2agent.github.io/" />
@@ -43,10 +43,10 @@ const year = new Date().getUTCFullYear();
       content="graph2agent flowchart nodes connected to an agent terminal"
     />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="graph2agent — 50.41% fewer exact-comprehension failures" />
+    <meta name="twitter:title" content="graph2agent — Mermaid diagrams, explained for agents" />
     <meta
       name="twitter:description"
-      content="A deterministic Mermaid digest measured on 330 private contracts. Core v0.2.1 and Action v0.3.0 are live; MCP v0.2.0 npm publication is pending."
+      content="Turn compact Mermaid into explicit, deterministic text for coding agents. Measured: 50.41% fewer exact-comprehension failures in one frozen paired benchmark."
     />
     <meta name="twitter:image" content="https://graph2agent.github.io/brand/logo.png" />
     <meta
@@ -62,7 +62,7 @@ const year = new Date().getUTCFullYear();
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="canonical" href="https://graph2agent.github.io/" />
     <link rel="describedby" href="/llms.txt" />
-    <title>graph2agent — 50.41% fewer exact-comprehension failures</title>
+    <title>graph2agent — Mermaid diagrams, explained for agents</title>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -73,9 +73,9 @@ const year = new Date().getUTCFullYear();
         <span>graph2agent</span>
       </a>
       <nav aria-label="Primary navigation">
-        <a href="#how">How it works</a>
+        <a href="#comparison">What it does</a>
+        <a href="#how">Install</a>
         <a href="#evidence">Evidence</a>
-        <a href="#limits">Limits</a>
         <a class="nav-cta" href="https://github.com/graph2agent/graph2agent">GitHub</a>
       </nav>
     </header>
@@ -83,66 +83,63 @@ const year = new Date().getUTCFullYear();
     <main id="main">
       <section id="top" class="hero shell" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="eyebrow"><span></span> measured on 330 frozen, paired contracts</p>
-          <h1 id="hero-title">50.41% fewer failures.<br /><em>Give agents the graph.</em></h1>
+          <p class="eyebrow"><span></span> Mermaid in · graph2agent · explicit context out</p>
+          <h1 id="hero-title">Mermaid diagrams,<br /><em>explained for agents.</em></h1>
           <p class="hero-lede">
-            Mermaid plus graph2agent's frozen <code>standard</code> digest cut exact-comprehension
-            failures from 121 to 60 in one benchmark. Compile the same deterministic context in
-            <code>make generate</code> and keep repositories current with a merge gate or daily bot
-            PR. MCP <code>v0.2.0</code> activates through one <code>npx</code> command after npm publication.
+            graph2agent turns Mermaid diagrams into explicit text for coding agents. Keep the
+            diagram for people; add deterministic context that spells out the elements, connections,
+            branches, order, topology, and what the notation does not prove. Humans can scan the
+            picture visually; an agent receiving only Mermaid source must reconstruct those
+            relationships from compact syntax.
+          </p>
+          <p class="hero-proof">
+            In one frozen paired benchmark, adding that text cut exact-comprehension failures from
+            121 to 60.
           </p>
           <div class="hero-actions">
-            <a class="button button-primary" href="#how">Get the commands</a>
-            <a class="button button-secondary" href="#evidence">Audit the result <span aria-hidden="true">↓</span></a>
+            <a class="button button-primary" href="#comparison">See the transformation</a>
+            <a class="button button-secondary" href="#evidence">Audit the benchmark <span aria-hidden="true">↓</span></a>
           </div>
-          <ul class="hero-facts" aria-label="Benchmark characteristics">
-            <li>61 digest-only wins</li>
-            <li>0 Mermaid-only wins</li>
-            <li>+18.48 percentage points</li>
+          <ul class="hero-facts" aria-label="Product characteristics">
+            <li>Diagram stays for humans</li>
+            <li>Rich text goes to agents</li>
+            <li>Deterministic · no model call</li>
           </ul>
         </div>
 
         <div class="hero-demo" aria-label="Markdown annotation example">
           <div class="demo-toolbar">
             <span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-            <span>architecture.md</span>
+            <span>diagram + generated context</span>
             <span class="agent-chip">agent context on</span>
           </div>
           <pre class="code-mermaid"><code><span class="muted">```mermaid</span>
-flowchart LR
-  Client --&gt; Gateway
-  Gateway --&gt; API
+flowchart TD
+  Request --&gt; auth&#123;Authorized?&#125;
+  auth --&gt;|yes| API
+  auth --&gt;|no| Reject
 <span class="muted">```</span></code></pre>
           <div class="hidden-context">
-            <p><span aria-hidden="true">◌</span> Hidden in rendered Markdown</p>
-            <pre><code>&lt;!-- graph2agent:begin format=v1 …
-`Client` sends R001 to `Gateway`.
-`Gateway` sends R002 to `API`.
-The graph is one directed chain.
-Missing links are unspecified.
+            <p><span aria-hidden="true">◌</span> Agent explanation · hidden in rendered Markdown</p>
+            <pre><code>&lt;!-- graph2agent:begin …
+Branch candidate: `Authorized?`.
+`Authorized?` points to `API`, labeled “yes”.
+`Authorized?` points to `Reject`, labeled “no”.
+Terminal nodes: `API` and `Reject`.
+Shape does not prove runtime decision semantics.
 graph2agent:end --&gt;</code></pre>
           </div>
         </div>
       </section>
 
-      <section class="signal-band" aria-label="Confirmatory benchmark headline">
-        <div class="shell signal-grid">
-          <p class="signal-number">+{exactLift.toFixed(2)}<span>pp</span></p>
-          <p class="signal-copy">
-            exact contract-comprehension lift in one frozen, paired benchmark of
-            <strong>{evidence.overall.total} private contracts</strong>
-          </p>
-          <a href="#evidence">Read the evidence boundary <span aria-hidden="true">→</span></a>
-        </div>
-      </section>
-
       <section id="comparison" class="section shell" aria-labelledby="comparison-title">
         <div class="section-heading">
-          <p class="kicker">The handoff problem</p>
-          <h2 id="comparison-title">A picture for humans.<br />A contract for agents.</h2>
+          <p class="kicker">Why agents need the text</p>
+          <h2 id="comparison-title">Humans see the picture.<br />Agents need the structure spelled out.</h2>
           <p>
-            Mermaid is concise by design. graph2agent makes topology and interpretation limits
-            explicit, so the next agent spends less effort reconstructing the graph.
+            Mermaid compresses many relationships into a few lines. As diagrams gain branches,
+            loops, and participants, graph2agent expands the authored structure into explicit text
+            while preserving the original diagram.
           </p>
         </div>
 
@@ -186,21 +183,32 @@ Interpretation limits
         <p class="illustrative-note">Illustrative compilation example; the measured study is reported below.</p>
       </section>
 
+      <section class="signal-band" aria-label="Confirmatory benchmark headline">
+        <div class="shell signal-grid">
+          <p class="signal-number">+{exactLift.toFixed(2)}<span>pp</span></p>
+          <p class="signal-copy">
+            exact contract-comprehension lift in one frozen, paired benchmark of
+            <strong>{evidence.overall.total} private contracts</strong>
+          </p>
+          <a href="#evidence">Read the evidence boundary <span aria-hidden="true">→</span></a>
+        </div>
+      </section>
+
       <section id="how" class="section section-dark" aria-labelledby="how-title">
         <div class="shell">
           <div class="section-heading inverse">
             <p class="kicker">One compiler, four launch surfaces</p>
             <h2 id="how-title">Generate once. Keep every consumer current.</h2>
             <p class="activation-note">
-              Core <code>v0.2.1</code>, Action <code>v0.3.0</code>, Homebrew, and direct Debian downloads are public. MCP <code>v0.2.0</code> is prepared for npm publication; signed APT is staged but not live.
+              Core <code>v0.2.1</code>, Action <code>v0.3.0</code>, Homebrew, and direct Debian downloads are public. MCP <code>v0.2.0</code> is prepared for npm publication; the signed APT repository is staged but not live.
             </p>
           </div>
           <ol class="surface-grid">
             <li>
               <span class="step">01</span>
-              <h3>Install, then generate</h3>
-              <p>Install with Homebrew or download a verified <a href="https://github.com/graph2agent/graph2agent/releases/tag/v0.2.1">amd64 or arm64 Debian package</a>, then put the deterministic update after your existing generators. The signed APT repository is staged but not live.</p>
-              <code>brew install graph2agent/tap/graph2agent<br />make generate</code>
+              <h3>Paste one, or generate them all</h3>
+              <p>Install with Homebrew or a verified <a href="https://github.com/graph2agent/graph2agent/releases/tag/v0.2.1">amd64 or arm64 Debian package</a>. Paste one diagram for rich text on stdout, or put the repository update after your existing generators.</p>
+              <code>brew install graph2agent/tap/graph2agent<br />graph2agent describe --profile interpreted-v3 -<br />make generate</code>
             </li>
             <li>
               <span class="step">02</span>
@@ -291,8 +299,8 @@ Interpretation limits
       </section>
 
       <section class="final-cta shell" aria-labelledby="cta-title">
-        <p class="kicker">Keep the diagram. Add the contract.</p>
-        <h2 id="cta-title">Put the graph in every agent's path.</h2>
+        <p class="kicker">Keep the diagram. Add the explanation.</p>
+        <h2 id="cta-title">Give every coding agent the text behind the graph.</h2>
         <div>
           <a class="button button-primary" href="https://github.com/graph2agent/graph2agent">Open graph2agent</a>
           <code>brew install graph2agent/tap/graph2agent</code>
