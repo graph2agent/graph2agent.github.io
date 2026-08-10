@@ -11,18 +11,23 @@
 
 This is the Apache-2.0-licensed source for the graph2agent product and evidence
 site. The page leads with that measured result, keeps its model/task/profile
-limits in view, and advertises the Homebrew, signed APT, one-command MCP, merge
-gate, and daily refresh-PR surfaces. Every headline derives from the checked-in
-aggregate evidence JSON.
+limits in view, and advertises the live Homebrew and direct Debian surfaces,
+the staged signed APT repository, the pending one-command MCP publication, and
+the live merge-gate and daily refresh-PR surfaces. Every headline derives from
+the checked-in aggregate evidence JSON.
 
 [Apache-2.0 license](LICENSE.md)
 
 ```sh
 brew install graph2agent/tap/graph2agent
+# Pending publication of the npm umbrella package:
 npx -y graph2agent-mcp@0.2.0
 ```
 
-Those commands activate with the first public `v0.2.0` release.
+The Homebrew formula is pinned to the verified, attested core `v0.2.1`
+release. Verified `amd64` and `arm64` Debian packages are attached directly to
+that release. The MCP command targets the prepared `v0.2.0` npm package, but
+registry publication is still pending.
 
 ## Development
 

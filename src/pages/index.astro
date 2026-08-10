@@ -24,13 +24,13 @@ const year = new Date().getUTCFullYear();
     <meta name="viewport" content="width=device-width" />
     <meta
       name="description"
-      content="graph2agent cut exact Mermaid-comprehension failures by 50.41% in one frozen paired benchmark. Install the CLI, run the MCP server with npx, and keep generated context current in GitHub."
+      content="graph2agent cut exact Mermaid-comprehension failures by 50.41% in one frozen paired benchmark. Core v0.2.1 and Action v0.3.0 are live; MCP v0.2.0 npm publication is pending."
     />
     <meta name="theme-color" content="#11130f" />
     <meta property="og:title" content="graph2agent — 50.41% fewer exact-comprehension failures" />
     <meta
       property="og:description"
-      content="A deterministic Mermaid digest, measured on 330 private contracts, with CLI, MCP, merge-gate, and daily PR surfaces."
+      content="A deterministic Mermaid digest measured on 330 private contracts. Core v0.2.1 and Action v0.3.0 are live; MCP v0.2.0 npm publication is pending."
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://graph2agent.github.io/" />
@@ -46,7 +46,7 @@ const year = new Date().getUTCFullYear();
     <meta name="twitter:title" content="graph2agent — 50.41% fewer exact-comprehension failures" />
     <meta
       name="twitter:description"
-      content="A deterministic Mermaid digest, measured on 330 private contracts, with CLI, MCP, merge-gate, and daily PR surfaces."
+      content="A deterministic Mermaid digest measured on 330 private contracts. Core v0.2.1 and Action v0.3.0 are live; MCP v0.2.0 npm publication is pending."
     />
     <meta name="twitter:image" content="https://graph2agent.github.io/brand/logo.png" />
     <meta
@@ -87,8 +87,8 @@ const year = new Date().getUTCFullYear();
           <p class="hero-lede">
             Mermaid plus graph2agent's frozen <code>standard</code> digest cut exact-comprehension
             failures from 121 to 60 in one benchmark. Compile the same deterministic context in
-            <code>make generate</code>, expose it to agents with one <code>npx</code> command, and
-            keep repositories current with a merge gate or daily bot PR.
+            <code>make generate</code> and keep repositories current with a merge gate or daily bot
+            PR. MCP <code>v0.2.0</code> activates through one <code>npx</code> command after npm publication.
           </p>
           <div class="hero-actions">
             <a class="button button-primary" href="#how">Get the commands</a>
@@ -191,33 +191,33 @@ Interpretation limits
             <p class="kicker">One compiler, four launch surfaces</p>
             <h2 id="how-title">Generate once. Keep every consumer current.</h2>
             <p class="activation-note">
-              These commands activate with the first public <code>v0.2.0</code> release.
+              Core <code>v0.2.1</code>, Action <code>v0.3.0</code>, Homebrew, and direct Debian downloads are public. MCP <code>v0.2.0</code> is prepared for npm publication; signed APT is staged but not live.
             </p>
           </div>
           <ol class="surface-grid">
             <li>
               <span class="step">01</span>
               <h3>Install, then generate</h3>
-              <p>Install with Homebrew or the signed APT repository, then put the deterministic update after your existing generators.</p>
-              <code>brew install graph2agent/tap/graph2agent<br />sudo apt-get install graph2agent<br />make generate</code>
+              <p>Install with Homebrew or download a verified <a href="https://github.com/graph2agent/graph2agent/releases/tag/v0.2.1">amd64 or arm64 Debian package</a>, then put the deterministic update after your existing generators. The signed APT repository is staged but not live.</p>
+              <code>brew install graph2agent/tap/graph2agent<br />make generate</code>
             </li>
             <li>
               <span class="step">02</span>
               <h3>Plug-and-play MCP</h3>
-              <p>Give an MCP-capable agent the tool without manually downloading or compiling a native binary.</p>
+              <p>The prepared npm umbrella package gives an MCP-capable agent the tool without a manual native download. This command becomes live when <code>v0.2.0</code> is published to npm.</p>
               <code>npx -y graph2agent-mcp@0.2.0</code>
             </li>
             <li>
               <span class="step">03</span>
               <h3>Block stale merges</h3>
               <p>Make a read-only <code>graph2agent check .</code> job required before a pull request can merge.</p>
-              <code>uses: graph2agent/github-action</code>
+              <code>uses: graph2agent/github-action/.github/workflows/check-markdown.yml@7c57998614ba579be55829423eaaa1262c35eff4<br />with:<br />&nbsp;&nbsp;graph2agent-version: v0.2.1</code>
             </li>
             <li>
               <span class="step">04</span>
               <h3>Let the bot maintain it</h3>
               <p>Run daily, change only generated Markdown context, and reuse one focused refresh PR until it merges.</p>
-              <code>schedule → refresh branch → PR</code>
+              <code>uses: graph2agent/github-action/.github/workflows/maintain-markdown.yml@7c57998614ba579be55829423eaaa1262c35eff4<br />with:<br />&nbsp;&nbsp;graph2agent-version: v0.2.1</code>
             </li>
           </ol>
         </div>
@@ -295,7 +295,7 @@ Interpretation limits
         <div>
           <a class="button button-primary" href="https://github.com/graph2agent/graph2agent">Open graph2agent</a>
           <code>brew install graph2agent/tap/graph2agent</code>
-          <code>npx -y graph2agent-mcp@0.2.0</code>
+          <code>npm pending → npx -y graph2agent-mcp@0.2.0</code>
         </div>
       </section>
     </main>

@@ -38,11 +38,21 @@ test("site copy retains the evidence boundary", () => {
 
 test("product instructions match the staged release surfaces", () => {
   assert.match(page, /brew install graph2agent\/tap\/graph2agent/);
-  assert.match(page, /sudo apt-get install graph2agent/);
+  assert.match(page, /releases\/tag\/v0\.2\.1/);
+  assert.match(page, /signed APT repository is staged but not live/);
+  assert.doesNotMatch(page, /sudo apt-get install graph2agent/);
   assert.match(page, /npx -y graph2agent-mcp@0\.2\.0/);
+  assert.match(page, /command becomes live when <code>v0\.2\.0<\/code> is published to npm/);
   assert.match(page, /graph2agent check \./);
   assert.match(page, /focused refresh PR/);
-  assert.match(page, /commands activate with the first public <code>v0\.2\.0<\/code> release/);
+  assert.match(page, /Core <code>v0\.2\.1<\/code>, Action <code>v0\.3\.0<\/code>, Homebrew, and direct Debian downloads are public/);
+  assert.match(page, /MCP <code>v0\.2\.0<\/code> is prepared for npm publication/);
+  assert.match(page, /MCP <code>v0\.2\.0<\/code> activates through one <code>npx<\/code> command after npm publication/);
+  assert.match(page, /npm pending → npx -y graph2agent-mcp@0\.2\.0/);
+  assert.match(page, /uses: graph2agent\/github-action\/\.github\/workflows\/check-markdown\.yml@/);
+  assert.match(page, /uses: graph2agent\/github-action\/\.github\/workflows\/maintain-markdown\.yml@/);
+  assert.equal(page.match(/graph2agent-version: v0\.2\.1/g)?.length, 2);
+  assert.match(page, /7c57998614ba579be55829423eaaa1262c35eff4/);
   assert.doesNotMatch(page, /@v0\.1\.0/);
   assert.doesNotMatch(page, /graph2agent@latest/);
 });
