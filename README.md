@@ -95,14 +95,11 @@ unpublished oracle material belong in this repository or its generated bundle.
 
 ## Deployment activation
 
-The site is not deployed until GitHub Pages is enabled for this repository, the
-launch changes are on `main`, and **Deploy GitHub Pages** is run. The workflow
-is manual-only, accepts only `main`, and requires the explicit
-`PUBLISH_PUBLICLY` confirmation.
-
-For the first deployment, enable GitHub Actions as the Pages source in the
-repository settings and run **Deploy GitHub Pages**. Add a default-branch push
-trigger only in a separately reviewed change.
+The site is public at <https://graph2agent.github.io/>. GitHub Pages uses the
+repository's GitHub Actions source, and the launch deployment completed from
+`main` on 2026-08-10. The **Deploy GitHub Pages** workflow remains manual-only,
+accepts only `main`, and requires the explicit `PUBLISH_PUBLICLY` confirmation.
+Add a default-branch push trigger only in a separately reviewed change.
 
 APT publication is a separate activation decision. Before adding any publisher
 or including `public/apt` in a deployment artifact, all of these requirements
