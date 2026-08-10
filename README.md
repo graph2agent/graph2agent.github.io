@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/graph2agent/graph2agent/main/.github/assets/favicon.svg" width="112" height="112" alt="graph2agent logo">
+</p>
+
 # Publish the measured graph2agent result—with the caveats attached
 
 > **Measured: 50.41% fewer exact-comprehension failures.** On one frozen,
@@ -5,19 +9,20 @@
 > `standard` digest scored 270/330 exact versus 209/330 with Mermaid alone
 > (+18.48 percentage points; 61 digest-only wins and 0 Mermaid-only wins).
 
-This is the private source for the graph2agent product and evidence site. The
-page leads with that measured result, keeps its model/task/profile limits in
-view, and advertises the staged Homebrew, signed APT, one-command MCP, merge
+This is the Apache-2.0-licensed source for the graph2agent product and evidence
+site. The page leads with that measured result, keeps its model/task/profile
+limits in view, and advertises the Homebrew, signed APT, one-command MCP, merge
 gate, and daily refresh-PR surfaces. Every headline derives from the checked-in
 aggregate evidence JSON.
+
+[Apache-2.0 license](LICENSE.md)
 
 ```sh
 brew install graph2agent/tap/graph2agent
 npx -y graph2agent-mcp@0.2.0
 ```
 
-Those commands activate only after the redistribution license and public
-release gates are approved.
+Those commands activate with the first public `v0.2.0` release.
 
 ## Development
 
@@ -76,39 +81,37 @@ installs `gnupg` and `dpkg-dev` before running it.
 ## Evidence policy
 
 `src/data/evidence.json` is copied from the provenance-bound confirmatory chart
-data in the research source. Site copy must preserve the exact task/model/cost
-boundaries. `tests/evidence.test.mjs` rejects headline drift and common relative
-versus absolute effect misstatements.
+data in the private research internals. Site copy must preserve the exact
+task/model/cost boundaries. `tests/evidence.test.mjs` rejects headline drift
+and common relative-versus-absolute effect misstatements.
 
 No private holdout cases, model traces, raw responses, credentials, or
 unpublished oracle material belong in this repository or its generated bundle.
 
-## Publishing
+## Deployment activation
 
-The repository and all builds remain private for now. The Pages workflow is
-manual-only, accepts only the `main` branch, and requires the explicit
-`PUBLISH_PUBLICLY` confirmation. Do not run it until public visibility is
-intended: GitHub does not offer private access control for an organization
-Pages site, and a private repository does not make that site private.
+The site is not deployed until GitHub Pages is enabled for this repository, the
+launch changes are on `main`, and **Deploy GitHub Pages** is run. The workflow
+is manual-only, accepts only `main`, and requires the explicit
+`PUBLISH_PUBLICLY` confirmation.
 
-When publication is approved, enable GitHub Actions as the Pages source in the
-repository settings, run **Deploy GitHub Pages**, and then add the default-
-branch push trigger in a reviewed change.
+For the first deployment, enable GitHub Actions as the Pages source in the
+repository settings and run **Deploy GitHub Pages**. Add a default-branch push
+trigger only in a separately reviewed change.
 
 APT publication is a separate activation decision. Before adding any publisher
 or including `public/apt` in a deployment artifact, all of these requirements
 must be met:
 
-1. The selected graph2agent license must permit binary redistribution.
-2. The `.deb` files must come from an immutable release and its checksum
+1. The `.deb` files must come from an immutable release and its checksum
    manifest must be signed by the approved release key.
-3. A dedicated archive signing subkey must be provisioned through a protected
+2. A dedicated archive signing subkey must be provisioned through a protected
    environment; no private key or passphrase may enter Git, workflow artifacts,
    logs, or the Pages bundle.
-4. The public archive key fingerprint, key-rotation procedure, package
+3. The public archive key fingerprint, key-rotation procedure, package
    retention policy, and repository freshness policy must be documented.
-5. The final HTTPS origin and `graph2agent.sources` bootstrap instructions must
+4. The final HTTPS origin and `graph2agent.sources` bootstrap instructions must
    be tested from clean supported Debian and Ubuntu systems.
-6. The publication workflow and its storage credentials must receive a
+5. The publication workflow and its storage credentials must receive a
    separate review and explicit approval. This repository intentionally has no
    automatic APT build or deployment trigger today.

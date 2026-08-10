@@ -27,7 +27,7 @@ img { max-width: 100%; height: auto; }
 
 .site-header { min-height: 5.5rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
 .brand { display: inline-flex; align-items: center; gap: .7rem; font-weight: 800; letter-spacing: -.03em; text-decoration: none; font-size: 1.05rem; }
-.brand-mark { display: grid; place-items: center; width: 2.35rem; aspect-ratio: 1; border-radius: .6rem; background: var(--ink); color: var(--acid); font-family: monospace; font-size: .82rem; }
+.brand-mark { display: block; width: 2.35rem; height: 2.35rem; border-radius: .6rem; }
 nav { display: flex; align-items: center; gap: 1.6rem; font-size: .9rem; font-weight: 650; }
 nav a { text-decoration: none; }
 .nav-cta { padding: .55rem .9rem; border: 1px solid var(--ink); border-radius: 999px; }

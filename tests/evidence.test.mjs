@@ -6,6 +6,12 @@ const evidence = JSON.parse(
   await readFile(new URL("../src/data/evidence.json", import.meta.url), "utf8"),
 );
 const page = await readFile(new URL("../src/pages/index.astro", import.meta.url), "utf8");
+const packageManifest = JSON.parse(
+  await readFile(new URL("../package.json", import.meta.url), "utf8"),
+);
+const packageLock = JSON.parse(
+  await readFile(new URL("../package-lock.json", import.meta.url), "utf8"),
+);
 
 test("headline metrics derive from the committed aggregate", () => {
   assert.equal(evidence.overall.total, 330);
@@ -36,7 +42,20 @@ test("product instructions match the staged release surfaces", () => {
   assert.match(page, /npx -y graph2agent-mcp@0\.2\.0/);
   assert.match(page, /graph2agent check \./);
   assert.match(page, /focused refresh PR/);
-  assert.match(page, /distribution commands are staged and activate with the\s+approved public release/);
+  assert.match(page, /commands activate with the first public <code>v0\.2\.0<\/code> release/);
   assert.doesNotMatch(page, /@v0\.1\.0/);
   assert.doesNotMatch(page, /graph2agent@latest/);
+});
+
+test("public launch metadata exposes the brand and Apache license", () => {
+  assert.equal(packageManifest.license, "Apache-2.0");
+  assert.equal(packageLock.packages[""].license, "Apache-2.0");
+  assert.match(page, /rel="manifest" href="\/site\.webmanifest"/);
+  assert.match(page, /rel="apple-touch-icon"/);
+  assert.match(page, /property="og:image" content="https:\/\/graph2agent\.github\.io\/brand\/logo\.png"/);
+  assert.match(page, /name="twitter:card" content="summary"/);
+  assert.match(page, /<img class="brand-mark" src="\/favicon\.svg" alt=""/);
+  assert.match(page, /href="\/LICENSE\.txt">License<\/a>/);
+  assert.doesNotMatch(page, /github\.com\/graph2agent\/research/);
+  assert.doesNotMatch(page, /Public distribution activation pending/);
 });

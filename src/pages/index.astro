@@ -34,6 +34,32 @@ const year = new Date().getUTCFullYear();
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://graph2agent.github.io/" />
+    <meta property="og:image" content="https://graph2agent.github.io/brand/logo.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1024" />
+    <meta property="og:image:height" content="1024" />
+    <meta
+      property="og:image:alt"
+      content="graph2agent flowchart nodes connected to an agent terminal"
+    />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="graph2agent — 50.41% fewer exact-comprehension failures" />
+    <meta
+      name="twitter:description"
+      content="A deterministic Mermaid digest, measured on 330 private contracts, with CLI, MCP, merge-gate, and daily PR surfaces."
+    />
+    <meta name="twitter:image" content="https://graph2agent.github.io/brand/logo.png" />
+    <meta
+      name="twitter:image:alt"
+      content="graph2agent flowchart nodes connected to an agent terminal"
+    />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-48x48.png" type="image/png" sizes="48x48" />
+    <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="canonical" href="https://graph2agent.github.io/" />
     <title>graph2agent — 50.41% fewer exact-comprehension failures</title>
   </head>
@@ -42,7 +68,7 @@ const year = new Date().getUTCFullYear();
 
     <header class="site-header shell">
       <a class="brand" href="#top" aria-label="graph2agent home">
-        <span class="brand-mark" aria-hidden="true">g→a</span>
+        <img class="brand-mark" src="/favicon.svg" alt="" width="38" height="38" />
         <span>graph2agent</span>
       </a>
       <nav aria-label="Primary navigation">
@@ -165,8 +191,7 @@ Interpretation limits
             <p class="kicker">One compiler, four launch surfaces</p>
             <h2 id="how-title">Generate once. Keep every consumer current.</h2>
             <p class="activation-note">
-              The <code>v0.2.0</code> distribution commands are staged and activate with the
-              approved public release.
+              These commands activate with the first public <code>v0.2.0</code> release.
             </p>
           </div>
           <ol class="surface-grid">
@@ -276,11 +301,12 @@ Interpretation limits
     </main>
 
     <footer class="site-footer shell">
-      <p>© {year} graph2agent. Public distribution activation pending.</p>
+      <p>© {year} graph2agent. Licensed under Apache-2.0.</p>
       <div>
-        <a href="https://github.com/graph2agent/research">Research</a>
+        <a href="#evidence">Evidence</a>
         <a href="https://github.com/graph2agent/benchmarks">Benchmarks</a>
         <a href="https://github.com/graph2agent/mcp">MCP</a>
+        <a href="/LICENSE.txt">License</a>
       </div>
     </footer>
   </body>
