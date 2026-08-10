@@ -4,7 +4,7 @@
 
 Use core v0.2.1 with strict parsing unless explicitly exploring partial input. For the richest single-diagram prose, pass one raw Mermaid source or one triple-backtick Mermaid fence to `graph2agent describe --profile interpreted-v3 FILE|-`. For repository-wide context, run `graph2agent update .`; it writes deterministic hidden context immediately after supported Mermaid fences. Do not infer executable behavior from layout, styling, shapes, or unlabeled relationships.
 
-Core v0.2.1, GitHub Action v0.3.0, Homebrew, and direct Debian downloads are public. The MCP v0.2.0 one-command npm package and signed APT repository are not yet live.
+Core v0.2.1, GitHub Action v0.3.0, Homebrew, and direct Debian downloads are public. The MCP v0.2.0 npm package is live on macOS and Linux. Native Windows MCP downloads are live on GitHub; one-command npm activation on Windows and the signed APT repository are not yet live.
 
 On one frozen paired benchmark of 330 private contracts in one requested Codex configuration, Mermaid plus the frozen `standard` digest passed 270/330 exact versus 209/330 with Mermaid alone: +18.48 percentage points and 50.41% relative failure reduction. This result does not by itself establish broader model, task, profile, Mermaid-construct, or production generalization. Provider monetary cost was unavailable, not zero.
 
@@ -18,6 +18,8 @@ On one frozen paired benchmark of 330 private contracts in one requested Codex c
 ## Agent interfaces and automation
 
 - [MCP server](https://raw.githubusercontent.com/graph2agent/mcp/v0.2.0/README.md): Read-only `describe_mermaid` tool, client configuration, package status, limits, and security model.
+- [npm MCP package](https://www.npmjs.com/package/graph2agent-mcp): One-command MCP launch on supported macOS and Linux hosts with `npx -y graph2agent-mcp@0.2.0`.
+- [MCP v0.2.0 release](https://github.com/graph2agent/mcp/releases/tag/v0.2.0): Verified native downloads for macOS, Linux, and Windows; use this release on Windows while npm activation is pending there.
 - [GitHub Action](https://raw.githubusercontent.com/graph2agent/github-action/v0.3.0/README.md): Merge freshness gate and scheduled maintenance workflow for generated Mermaid context.
 - [Examples](https://raw.githubusercontent.com/graph2agent/examples/main/README.md): Reproducible CLI, library, merge-gate, and daily refresh examples.
 

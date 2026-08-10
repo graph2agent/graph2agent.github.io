@@ -201,7 +201,7 @@ Interpretation limits
             <p class="kicker">One compiler, four launch surfaces</p>
             <h2 id="how-title">Generate once. Keep every consumer current.</h2>
             <p class="activation-note">
-              Core <code>v0.2.1</code>, Action <code>v0.3.0</code>, Homebrew, and direct Debian downloads are public. MCP <code>v0.2.0</code> is prepared for npm publication; the signed APT repository is staged but not live.
+              Core <code>v0.2.1</code>, Action <code>v0.3.0</code>, Homebrew, and direct Debian downloads are public. MCP <code>v0.2.0</code> is live through npm on macOS and Linux; native Windows downloads are live on GitHub, while one-command npm activation on Windows is pending. The signed APT repository is staged but not live.
             </p>
           </div>
           <ol class="surface-grid">
@@ -214,7 +214,7 @@ Interpretation limits
             <li>
               <span class="step">02</span>
               <h3>Plug-and-play MCP</h3>
-              <p>The prepared npm umbrella package gives an MCP-capable agent the tool without a manual native download. This command becomes live when <code>v0.2.0</code> is published to npm.</p>
+              <p>On macOS and Linux, the live <a href="https://www.npmjs.com/package/graph2agent-mcp">npm package</a> gives an MCP-capable agent the tool without a manual native download. Windows users can use the verified native executables from the <a href="https://github.com/graph2agent/mcp/releases/tag/v0.2.0">v0.2.0 GitHub release</a>; one-command npm activation on Windows is pending.</p>
               <code>npx -y graph2agent-mcp@0.2.0</code>
             </li>
             <li>
@@ -308,7 +308,7 @@ Interpretation limits
         <div>
           <a class="button button-primary" href="https://github.com/graph2agent/graph2agent">Open graph2agent</a>
           <code>brew install graph2agent/tap/graph2agent</code>
-          <code>npm pending → npx -y graph2agent-mcp@0.2.0</code>
+          <code>npx -y graph2agent-mcp@0.2.0</code>
         </div>
       </section>
     </main>
