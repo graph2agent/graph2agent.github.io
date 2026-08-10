@@ -6,4 +6,5 @@ issue.
 
 The production site is static, has no analytics, authentication, forms,
 cookies, or runtime API calls. Dependencies are pinned by the lockfile and
-GitHub Actions are pinned by immutable commit SHA.
+GitHub Actions are pinned by immutable commit SHA. Workflow checkouts persist
+no Git credential into the worktree used by dependency or build commands.
