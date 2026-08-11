@@ -1,0 +1,37 @@
+Diagram contract
+Type: Mermaid flowchart.
+Layout direction: top to bottom. This controls presentation and does not by itself declare execution order.
+The diagram contains 4 elements, 3 explicit relationships, 0 ordered events, 0 groups, and 0 notes.
+
+Elements
+- `Request` is a rectangle.
+- `Authorized?` uses the "decision" shape.
+- `API` uses the "rounded" shape.
+- `Reject` is a rectangle.
+
+Connections
+- `Request` points to `Authorized?` with an arrow.
+- `Authorized?` points to `API` with an arrow labeled "yes".
+- `Authorized?` points to `Reject` with an arrow labeled "no".
+
+Direct connection summary
+- `Request`: incoming from none; outgoing to `Authorized?`.
+- `Authorized?`: incoming from `Request`; outgoing to `API` and `Reject`.
+- `API`: incoming from `Authorized?`; outgoing to none.
+- `Reject`: incoming from `Authorized?`; outgoing to none.
+
+Derived topology
+- Elements with no incoming directed connections: `Request`.
+- Elements with no outgoing directed connections: `API` and `Reject`.
+- Branch candidates, based only on multiple outgoing directed connections: `Authorized?`.
+- Merge candidates, based only on multiple incoming directed connections: none.
+- Weakly connected components: [`API`, `Authorized?`, `Reject`, and `Request`].
+- Directed cycles, shown as strongly connected element sets: none.
+
+Meaning and limits
+- Recognized Mermaid or UML markers are modeling cues. Other kinds, styles, and presentation do not establish executable behavior or unstated rules. Color, placement, and styling are presentation unless explicitly labeled as contract semantics. Layout direction is presentation, not execution order. Missing links are unspecified, not forbidden. A conventional reading never overrides explicit local structure.
+- Only authored explicit shapes receive roles: `Request` has an authored rectangle, commonly read as a process step; `Authorized?` has an authored decision, commonly read as a point where outgoing paths represent alternatives; `API` has an authored rounded, commonly read as an event; `Reject` has an authored rectangle, commonly read as a process step. Mermaid guarantees those shapes, not runtime components, boolean evaluation, persistence, or execution; implicit rectangles and label-only metadata do not become processes.
+- A one-way connector records source-to-target direction without execution timing.
+- Connector labels are literal contract text without normalization or evaluation.
+- Shape cues guide interpretation but alone define no executable behavior.
+- Branch and merge candidates are topology observations, not proof of decision or synchronization semantics.

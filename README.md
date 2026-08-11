@@ -23,14 +23,14 @@ Every headline derives from the checked-in aggregate evidence JSON.
 ```sh
 brew install graph2agent/tap/graph2agent
 # Live on macOS and Linux:
-npx -y graph2agent-mcp@0.2.0
+npx -y graph2agent-mcp@0.4.0
 ```
 
-The Homebrew formula is pinned to the verified, attested core `v0.2.1`
+The Homebrew formula is pinned to the verified, attested core `v0.4.0`
 release. Verified `amd64` and `arm64` Debian packages are attached directly to
-that release. The MCP command launches the live `v0.2.0` npm package on macOS
+that release. The MCP command launches the live `v0.4.0` npm package on macOS
 and Linux. Verified native Windows executables are available from the
-[MCP v0.2.0 GitHub release](https://github.com/graph2agent/mcp/releases/tag/v0.2.0);
+[MCP v0.4.0 GitHub release](https://github.com/graph2agent/mcp/releases/tag/v0.4.0);
 one-command npm activation on Windows is pending.
 
 ## Development
@@ -45,12 +45,34 @@ npm run build
 npm run dev
 ```
 
+`src/data/release.json` is the authoritative public product version. Core, MCP,
+and GitHub Action copy all use that version; the reusable workflow remains
+pinned separately to an immutable commit SHA.
+
+The landing-page example has one canonical Mermaid source under
+`src/data/examples`. Its exact `interpreted-v3` output, static themed SVG, and
+hash metadata are committed beside it. Regenerate the text with the release
+candidate CLI and the SVG with the pinned renderer, then run the optional live
+compiler assertion as part of the normal tests:
+
+```sh
+graph2agent describe --profile interpreted-v3 \
+  src/data/examples/request-routing.mmd \
+  > src/data/examples/request-routing.interpreted-v3.txt
+npx -y @mermaid-js/mermaid-cli@11.16.0 \
+  -c scripts/mermaid.config.json \
+  -i src/data/examples/request-routing.mmd \
+  -o public/diagrams/request-routing.svg \
+  -b transparent
+GRAPH2AGENT_BIN="$(command -v graph2agent)" npm test
+```
+
 ## Signed APT repository staging
 
 [`scripts/build-apt-repository.sh`](scripts/build-apt-repository.sh) builds a
 complete, signed archive under `public/apt` without uploading or deploying it.
-The generated tree is ignored by Git. Nothing in CI or the manual Pages
-workflow invokes the builder.
+The generated tree is ignored by Git. Nothing in CI or either Pages deployment
+path invokes the builder.
 
 The builder requires two separate trust inputs:
 
@@ -97,13 +119,59 @@ and common relative-versus-absolute effect misstatements.
 No private holdout cases, model traces, raw responses, credentials, or
 unpublished oracle material belong in this repository or its generated bundle.
 
-## Deployment activation
+## Coordinated release deployment
 
 The site is public at <https://graph2agent.github.io/>. GitHub Pages uses the
-repository's GitHub Actions source, and the launch deployment completed from
-`main` on 2026-08-10. The **Deploy GitHub Pages** workflow remains manual-only,
-accepts only `main`, and requires the explicit `PUBLISH_PUBLICLY` confirmation.
-Add a default-branch push trigger only in a separately reviewed change.
+repository's GitHub Actions source. The **Deploy coordinated GitHub Pages
+release** workflow accepts only `main` in this canonical repository and has two
+entry points:
+
+- `repository_dispatch` with event type `graph2agent-release` is the normal,
+  automated final leg of the coordinated release train; and
+- `workflow_dispatch` is a recovery path that requires `version`,
+  `core_commit`, `action_commit`, and the explicit `PUBLISH_PUBLICLY`
+  confirmation.
+
+The automated dispatch payload is a one-shot release contract:
+
+```json
+{
+  "event_type": "graph2agent-release",
+  "client_payload": {
+    "version": "v0.4.0",
+    "core_commit": "<40-character lowercase core commit>",
+    "action_commit": "<40-character lowercase Action commit>",
+    "confirm_publication": "PUBLISH_PUBLICLY"
+  }
+}
+```
+
+`version` must be canonical `vMAJOR.MINOR.PATCH` without leading zeroes.
+Both commits must be full lowercase object IDs. Before building, the workflow
+requires `src/data/release.json` to contain that version and Action commit,
+checks that the public core and Action tags peel to the supplied commits, and
+builds the exact core revision to verify the committed diagram narrative. It
+then runs the same type, test, and static-build gates as CI before uploading the
+Pages artifact. The explicit `confirm_publication` assertion prevents a generic
+or incomplete repository dispatch from publishing the site. A failed or
+malformed dispatch cannot reach deployment.
+
+One-time orchestration setup belongs in the upstream release coordinator:
+
+1. Install a dedicated GitHub App on `graph2agent.github.io`, granting only
+   repository **Contents: write**, which GitHub requires to create a repository
+   dispatch.
+2. Keep the App private key in the dispatching repository's protected release
+   environment and generate a short-lived installation token scoped only to
+   this repository. Do not store a cross-repository personal access token.
+3. Send exactly one `graph2agent-release` dispatch only after the immutable
+   core and Action tags, MCP packages, and Homebrew formula have passed their
+   release gates. The matching site release metadata must already be on
+   `main`.
+
+The release concurrency group never cancels an in-progress deployment. A
+manual recovery run must reuse the same immutable inputs; it is not a way to
+override mismatched release metadata. Default-branch pushes do not deploy.
 
 APT publication is a separate activation decision. Before adding any publisher
 or including `public/apt` in a deployment artifact, all of these requirements

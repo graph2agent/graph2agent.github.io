@@ -95,7 +95,7 @@ async function makePackage(root, architecture) {
     join(controlDirectory, "control"),
     [
       "Package: graph2agent",
-      "Version: 0.2.0-1",
+      "Version: 0.4.0-1",
       "Section: utils",
       "Priority: optional",
       `Architecture: ${architecture}`,
@@ -106,9 +106,9 @@ async function makePackage(root, architecture) {
     ].join("\n"),
   );
   const binary = join(binaryDirectory, "graph2agent");
-  await writeFile(binary, "#!/bin/sh\nprintf '%s\\n' 'graph2agent 0.2.0'\n");
+  await writeFile(binary, "#!/bin/sh\nprintf '%s\\n' 'graph2agent 0.4.0'\n");
   await chmod(binary, 0o755);
-  const output = join(root, `graph2agent_0.2.0-1_${architecture}.deb`);
+  const output = join(root, `graph2agent_0.4.0-1_${architecture}.deb`);
   runChecked("dpkg-deb", [
     "--root-owner-group",
     "--build",
@@ -300,7 +300,7 @@ test(
         "main",
         "g",
         "graph2agent",
-        "graph2agent_0.2.0-1_amd64.deb",
+        "graph2agent_0.4.0-1_amd64.deb",
       ),
       join(
         output,
@@ -308,7 +308,7 @@ test(
         "main",
         "g",
         "graph2agent",
-        "graph2agent_0.2.0-1_arm64.deb",
+        "graph2agent_0.4.0-1_arm64.deb",
       ),
     ]) {
       assert.ok(

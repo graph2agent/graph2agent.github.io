@@ -1,0 +1,21 @@
+{
+  "id": "request-routing",
+  "release_version": "v0.4.0",
+  "compatibility_profile": "core-contract-v2",
+  "ir_schema_version": "1.0",
+  "narrative_profile": "interpreted-v3",
+  "mermaid_renderer": "@mermaid-js/mermaid-cli",
+  "mermaid_renderer_version": "11.16.0",
+  "source_path": "src/data/examples/request-routing.mmd",
+  "source_sha256": "e77874a1acecf21f67983ad8e5e025c3225dce58dbb853450ae492dd624010a6",
+  "semantic_sha256": "97bfa8e0b1fc7d6816e20e1161e837009616ae9029a3a0136c80738faa48c141",
+  "compiled_path": "src/data/examples/request-routing.interpreted-v3.txt",
+  "compiled_sha256": "4e6a4f3f6dca80b972902daddc93064aaac59028422240accda13230c639dd76",
+  "rendered_svg": "/diagrams/request-routing.svg",
+  "rendered_svg_path": "public/diagrams/request-routing.svg",
+  "rendered_svg_sha256": "2b870be1ef45cb2712f0eab12cb398c3a4a07ddebda218d98d469a839ce37a0a",
+  "rendered_width": 226,
+  "rendered_height": 387,
+  "rendered_alt": "A request flows to an authorization decision, then branches to API on yes or Reject on no.",
+  "diagnostics": 0
+}

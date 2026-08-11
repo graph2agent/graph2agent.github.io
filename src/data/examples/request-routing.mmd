@@ -1,0 +1,4 @@
+flowchart TD
+  request[Request] --> auth{Authorized?}
+  auth -->|yes| api(API)
+  auth -->|no| reject[Reject]

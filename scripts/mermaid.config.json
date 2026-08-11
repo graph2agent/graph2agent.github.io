@@ -1,0 +1,18 @@
+{
+  "theme": "base",
+  "themeVariables": {
+    "background": "#fffdf7",
+    "primaryColor": "#c8ff43",
+    "primaryTextColor": "#11130f",
+    "primaryBorderColor": "#11130f",
+    "lineColor": "#11130f",
+    "secondaryColor": "#f4f1e8",
+    "tertiaryColor": "#fffdf7",
+    "edgeLabelBackground": "#fffdf7",
+    "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif"
+  },
+  "flowchart": {
+    "curve": "linear",
+    "htmlLabels": false
+  }
+}

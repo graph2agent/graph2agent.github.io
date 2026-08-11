@@ -5,6 +5,9 @@ import test from "node:test";
 const evidence = JSON.parse(
   await readFile(new URL("../src/data/evidence.json", import.meta.url), "utf8"),
 );
+const release = JSON.parse(
+  await readFile(new URL("../src/data/release.json", import.meta.url), "utf8"),
+);
 const page = await readFile(new URL("../src/pages/index.astro", import.meta.url), "utf8");
 const llms = await readFile(new URL("../public/llms.txt", import.meta.url), "utf8");
 const readme = await readFile(new URL("../README.md", import.meta.url), "utf8");
@@ -64,32 +67,40 @@ test("the first screen explains the product before presenting proof", () => {
   assert.match(page, /Rich text goes to agents/);
   assert.match(page, /Deterministic · no model call/);
   assert.match(page, /diagram \+ generated context/);
-  assert.match(page, /Agent explanation · hidden in rendered Markdown/);
-  assert.match(page, /Branch candidate: `Authorized\?`/);
+  assert.match(page, /Exact \{diagramExample\.narrative_profile\} agent/);
+  assert.match(page, /Rendered Mermaid · same source, compiled for people/);
+  assert.match(page, /\{compiledDiagramText\.trimEnd\(\)\}/);
   assert.match(page, /Humans see the picture\.<br \/>Agents need the structure spelled out/);
   assert.doesNotMatch(page, /Give agents the graph/);
 });
 
 test("product instructions match the staged release surfaces", () => {
+  const npmVersion = release.version.slice(1);
+
+  assert.equal(release.version, "v0.4.0");
+  assert.equal(
+    release.action_workflow_ref,
+    "48bc59a4742c2fd0311e81214b6571ce10601a4b",
+  );
+  assert.match(page, /const releaseVersion = release\.version/);
+  assert.match(page, /const actionWorkflowRef = release\.action_workflow_ref/);
   assert.match(page, /brew install graph2agent\/tap\/graph2agent/);
-  assert.match(page, /releases\/tag\/v0\.2\.1/);
-  assert.match(page, /signed APT repository is staged but not live/);
+  assert.match(page, /releases\/tag\/\$\{releaseVersion\}/);
+  assert.match(page, /signed APT repository is\s+staged but not live/);
   assert.doesNotMatch(page, /sudo apt-get install graph2agent/);
-  assert.match(page, /npx -y graph2agent-mcp@0\.2\.0/);
-  assert.match(page, /MCP <code>v0\.2\.0<\/code> is live through npm on macOS and Linux/);
+  assert.equal(page.match(/npx -y graph2agent-mcp@\{npmVersion\}/g)?.length, 2);
+  assert.match(page, /MCP <code>\{releaseVersion\}<\/code> is live/);
   assert.match(page, /native Windows downloads are live on GitHub/);
   assert.match(page, /one-command npm activation on Windows is pending/);
   assert.match(page, /https:\/\/www\.npmjs\.com\/package\/graph2agent-mcp/);
-  assert.match(page, /https:\/\/github\.com\/graph2agent\/mcp\/releases\/tag\/v0\.2\.0/);
+  assert.match(page, /https:\/\/github\.com\/graph2agent\/mcp\/releases\/tag\/\$\{releaseVersion\}/);
   assert.match(page, /graph2agent check \./);
   assert.match(page, /focused refresh PR/);
-  assert.match(page, /Core <code>v0\.2\.1<\/code>, Action <code>v0\.3\.0<\/code>, Homebrew, and direct Debian downloads are public/);
+  assert.equal(page.match(/graph2agent-version: \{releaseVersion\}/g)?.length, 2);
+  assert.equal(page.match(/@\{actionWorkflowRef\}/g)?.length, 2);
   assert.match(page, /graph2agent describe --profile interpreted-v3 -/);
-  assert.equal(page.match(/npx -y graph2agent-mcp@0\.2\.0/g)?.length, 2);
   assert.match(page, /uses: graph2agent\/github-action\/\.github\/workflows\/check-markdown\.yml@/);
   assert.match(page, /uses: graph2agent\/github-action\/\.github\/workflows\/maintain-markdown\.yml@/);
-  assert.equal(page.match(/graph2agent-version: v0\.2\.1/g)?.length, 2);
-  assert.match(page, /7c57998614ba579be55829423eaaa1262c35eff4/);
   assert.doesNotMatch(page, /@v0\.1\.0/);
   assert.doesNotMatch(page, /graph2agent@latest/);
   assert.doesNotMatch(page, /prepared for npm publication/);
@@ -97,10 +108,16 @@ test("product instructions match the staged release surfaces", () => {
   assert.doesNotMatch(page, /npm pending →/);
 
   assert.match(readme, /Live on macOS and Linux/);
-  assert.match(readme, /MCP v0\.2\.0 GitHub release/);
+  assert.match(readme, new RegExp(`graph2agent-mcp@${npmVersion.replaceAll(".", "\\.")}`));
+  assert.match(readme, new RegExp(`MCP ${release.version.replaceAll(".", "\\.")} GitHub release`));
   assert.match(readme, /one-command npm activation on Windows is pending/);
   assert.doesNotMatch(readme, /pending one-command MCP publication/);
   assert.doesNotMatch(readme, /registry publication is still pending/);
+
+  for (const publicCopy of [page, readme, llms]) {
+    assert.doesNotMatch(publicCopy, /v0\.(?:2|3)\.[0-9]+/);
+    assert.doesNotMatch(publicCopy, /graph2agent-mcp@0\.(?:2|3)\.[0-9]+/);
+  }
 });
 
 test("public launch metadata exposes the brand and Apache license", () => {
@@ -135,12 +152,12 @@ test("llms.txt is a concise public and evidence-bounded project index", () => {
 
   assert.match(llms, /graph2agent describe --profile interpreted-v3 FILE\|-/);
   assert.match(llms, /graph2agent update \./);
-  assert.match(llms, /Core v0\.2\.1, GitHub Action v0\.3\.0, Homebrew, and direct Debian downloads are public/);
-  assert.match(llms, /MCP v0\.2\.0 npm package is live on macOS and Linux/);
+  assert.match(llms, new RegExp(`Core ${release.version.replaceAll(".", "\\.")}, GitHub Action ${release.version.replaceAll(".", "\\.")}`));
+  assert.match(llms, new RegExp(`MCP ${release.version.replaceAll(".", "\\.")} npm package is live on macOS and Linux`));
   assert.match(llms, /Native Windows MCP downloads are live on GitHub/);
   assert.match(llms, /one-command npm activation on Windows and the signed APT repository are not yet live/);
   assert.match(llms, /\[npm MCP package\]\(https:\/\/www\.npmjs\.com\/package\/graph2agent-mcp\)/);
-  assert.match(llms, /\[MCP v0\.2\.0 release\]\(https:\/\/github\.com\/graph2agent\/mcp\/releases\/tag\/v0\.2\.0\)/);
+  assert.match(llms, new RegExp(`\\[MCP ${release.version.replaceAll(".", "\\.")} release\\]\\(https://github\\.com/graph2agent/mcp/releases/tag/${release.version.replaceAll(".", "\\.")}\\)`));
   assert.match(llms, new RegExp(`frozen paired benchmark of ${evidence.overall.total} private contracts`));
   assert.match(llms, new RegExp(`${evidence.overall.digest_passed}/${evidence.overall.total} exact versus ${evidence.overall.mermaid_passed}/${evidence.overall.total}`));
   assert.match(llms, /\+18\.48 percentage points and 50\.41% relative failure reduction/);

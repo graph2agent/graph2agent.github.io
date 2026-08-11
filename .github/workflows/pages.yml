@@ -1,8 +1,22 @@
-name: Deploy GitHub Pages
+name: Deploy coordinated GitHub Pages release
 
 on:
+  repository_dispatch:
+    types: [graph2agent-release]
   workflow_dispatch:
     inputs:
+      version:
+        description: Exact coordinated SemVer tag, including the leading v.
+        required: true
+        type: string
+      core_commit:
+        description: Exact graph2agent core release commit (40 lowercase hex characters).
+        required: true
+        type: string
+      action_commit:
+        description: Exact graph2agent GitHub Action release commit (40 lowercase hex characters).
+        required: true
+        type: string
       confirm-publication:
         description: Type PUBLISH_PUBLICLY to confirm this organization site will be public.
         required: true
@@ -14,34 +28,146 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
+  group: pages-${{ github.event.client_payload.version || inputs.version }}
   cancel-in-progress: false
 
 jobs:
   build:
-    if: github.ref == 'refs/heads/main' && inputs.confirm-publication == 'PUBLISH_PUBLICLY'
+    if: >-
+      github.repository == 'graph2agent/graph2agent.github.io' &&
+      github.ref == 'refs/heads/main' &&
+      ((github.event_name == 'repository_dispatch' &&
+      github.event.client_payload.confirm_publication == 'PUBLISH_PUBLICLY') ||
+      (github.event_name == 'workflow_dispatch' &&
+      inputs['confirm-publication'] == 'PUBLISH_PUBLICLY'))
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      pages: write
+    env:
+      RELEASE_VERSION: ${{ github.event.client_payload.version || inputs.version }}
+      CORE_COMMIT: ${{ github.event.client_payload.core_commit || inputs.core_commit }}
+      ACTION_COMMIT: ${{ github.event.client_payload.action_commit || inputs.action_commit }}
     steps:
-      - name: Check out repository
+      - name: Validate coordinated release request
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$RELEASE_VERSION" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]
+          [[ "$CORE_COMMIT" =~ ^[0-9a-f]{40}$ ]]
+          [[ "$ACTION_COMMIT" =~ ^[0-9a-f]{40}$ ]]
+
+      - name: Check out exact site source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          fetch-depth: 0
           persist-credentials: false
+
+      - name: Verify checked-in release identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import { readFile } from "node:fs/promises";
+
+          const release = JSON.parse(await readFile("src/data/release.json", "utf8"));
+          if (release.version !== process.env.RELEASE_VERSION) {
+            throw new Error(
+              `release.json version ${release.version} does not match ${process.env.RELEASE_VERSION}`,
+            );
+          }
+          if (release.action_workflow_ref !== process.env.ACTION_COMMIT) {
+            throw new Error(
+              `release.json action ref ${release.action_workflow_ref} does not match ${process.env.ACTION_COMMIT}`,
+            );
+          }
+          NODE
+
+      - name: Check out exact core release source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: graph2agent/graph2agent
+          ref: ${{ env.CORE_COMMIT }}
+          path: .release-core
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Check out exact Action release source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: graph2agent/github-action
+          ref: ${{ env.ACTION_COMMIT }}
+          path: .release-action
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Verify immutable public release tags
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ $(git -C .release-core rev-parse HEAD) == "$CORE_COMMIT" ]]
+          [[ $(git -C .release-action rev-parse HEAD) == "$ACTION_COMMIT" ]]
+
+          git -C .release-core fetch --force --no-tags origin \
+            "refs/tags/${RELEASE_VERSION}:refs/tags/${RELEASE_VERSION}"
+          git -C .release-action fetch --force --no-tags origin \
+            "refs/tags/${RELEASE_VERSION}:refs/tags/${RELEASE_VERSION}"
+
+          [[ $(git -C .release-core rev-parse "${RELEASE_VERSION}^{commit}") == "$CORE_COMMIT" ]]
+          [[ $(git -C .release-action rev-parse "${RELEASE_VERSION}^{commit}") == "$ACTION_COMMIT" ]]
+
+          source_version=$(sed -n 's/^[[:space:]]*Version = "\([^"]*\)"/\1/p' \
+            .release-core/graph2agent.go)
+          [[ "$RELEASE_VERSION" == "v${source_version}" ]]
+
       - name: Set up Node
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: 24
           cache: npm
+
+      - name: Set up Go
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: .release-core/go.mod
+          cache: false
+
       - name: Configure Pages
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+
       - name: Install dependencies
         run: npm ci
+
+      - name: Install APT repository test tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends dpkg-dev gnupg
+
+      - name: Build coordinated core compiler
+        shell: bash
+        run: |
+          set -euo pipefail
+          (
+            cd .release-core
+            go build -trimpath -o "$RUNNER_TEMP/graph2agent" ./cmd/graph2agent
+          )
+          [[ $("$RUNNER_TEMP/graph2agent" version) == \
+            "graph2agent ${RELEASE_VERSION#v} (profile core-contract-v2, IR schema 1.0)" ]]
+
+      - name: Check types and Astro templates
+        run: npm run check
+
+      - name: Verify release copy and exact compiler snapshot
+        env:
+          GRAPH2AGENT_BIN: ${{ runner.temp }}/graph2agent
+        run: npm test
+
       - name: Build static site
         run: npm run build
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
         with:
@@ -54,6 +180,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
     steps:
       - name: Deploy to GitHub Pages
         id: deployment

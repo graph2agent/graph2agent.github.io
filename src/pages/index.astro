@@ -1,5 +1,9 @@
 ---
 import evidence from "../data/evidence.json";
+import diagramExample from "../data/examples/request-routing.json";
+import compiledDiagramText from "../data/examples/request-routing.interpreted-v3.txt?raw";
+import diagramSource from "../data/examples/request-routing.mmd?raw";
+import release from "../data/release.json";
 import "../styles/global.css";
 
 const exactBefore = (100 * evidence.overall.mermaid_passed) / evidence.overall.total;
@@ -15,6 +19,13 @@ const outputRatio = evidence.resources.output_tokens.digest / evidence.resources
 const reasoningRatio =
   evidence.resources.reasoning_output_tokens.digest /
   evidence.resources.reasoning_output_tokens.mermaid;
+const releaseVersion = release.version;
+const npmVersion = releaseVersion.slice(1);
+const actionWorkflowRef = release.action_workflow_ref;
+const coreReleaseUrl = `https://github.com/graph2agent/graph2agent/releases/tag/${releaseVersion}`;
+const mcpReleaseUrl = `https://github.com/graph2agent/mcp/releases/tag/${releaseVersion}`;
+const markdownFenceOpen = "```mermaid\n";
+const markdownFenceClose = "\n```";
 const year = new Date().getUTCFullYear();
 ---
 
@@ -114,21 +125,25 @@ const year = new Date().getUTCFullYear();
             <span>diagram + generated context</span>
             <span class="agent-chip">agent context on</span>
           </div>
-          <pre class="code-mermaid"><code><span class="muted">```mermaid</span>
-flowchart TD
-  Request --&gt; auth&#123;Authorized?&#125;
-  auth --&gt;|yes| API
-  auth --&gt;|no| Reject
-<span class="muted">```</span></code></pre>
+          <pre class="code-mermaid"><code><span class="muted">{markdownFenceOpen}</span>{diagramSource.trimEnd()}<span class="muted">{markdownFenceClose}</span></code></pre>
+          <figure
+            class="diagram-render hero-diagram-render"
+            data-source-sha256={diagramExample.source_sha256}
+          >
+            <img
+              src={diagramExample.rendered_svg}
+              alt={diagramExample.rendered_alt}
+              width={diagramExample.rendered_width}
+              height={diagramExample.rendered_height}
+            />
+            <figcaption>Rendered Mermaid · same source, compiled for people</figcaption>
+          </figure>
           <div class="hidden-context">
-            <p><span aria-hidden="true">◌</span> Agent explanation · hidden in rendered Markdown</p>
-            <pre><code>&lt;!-- graph2agent:begin …
-Branch candidate: `Authorized?`.
-`Authorized?` points to `API`, labeled “yes”.
-`Authorized?` points to `Reject`, labeled “no”.
-Terminal nodes: `API` and `Reject`.
-Shape does not prove runtime decision semantics.
-graph2agent:end --&gt;</code></pre>
+            <p>
+              <span aria-hidden="true">◌</span> Exact {diagramExample.narrative_profile} agent
+              context · {releaseVersion}
+            </p>
+            <pre><code>{compiledDiagramText.trimEnd()}</code></pre>
           </div>
         </div>
       </section>
@@ -147,10 +162,20 @@ graph2agent:end --&gt;</code></pre>
         <div class="comparison-grid">
           <article class="comparison-card raw-card">
             <div class="card-label"><span>Input A</span> Mermaid only</div>
-            <pre><code>flowchart TD
-  request[Request] --&gt; auth&#123;Authorized?&#125;
-  auth --&gt;|yes| api(API)
-  auth --&gt;|no| reject[Reject]</code></pre>
+            <pre class="comparison-source"><code>{diagramSource.trimEnd()}</code></pre>
+            <figure
+              class="diagram-render comparison-diagram-render"
+              data-source-sha256={diagramExample.source_sha256}
+            >
+              <img
+                src={diagramExample.rendered_svg}
+                alt={diagramExample.rendered_alt}
+                width={diagramExample.rendered_width}
+                height={diagramExample.rendered_height}
+                loading="lazy"
+              />
+              <figcaption>Rendered Mermaid · the picture humans scan</figcaption>
+            </figure>
             <div class="inference-list">
               <p>Agent must reconstruct:</p>
               <ul>
@@ -162,22 +187,10 @@ graph2agent:end --&gt;</code></pre>
           </article>
 
           <article class="comparison-card digest-card">
-            <div class="card-label"><span>Input B</span> Mermaid + graph2agent</div>
-            <pre><code>Elements
-- `Request` is a rectangle.
-- `Authorized?` is a decision-shaped element.
-
-Explicit relationships
-- `Request` points to `Authorized?`.
-- `Authorized?` points to `API`, labeled “yes”.
-- `Authorized?` points to `Reject`, labeled “no”.
-
-Derived topology
-- Branch candidate: `Authorized?`.
-- Terminal nodes: `API` and `Reject`.
-
-Interpretation limits
-- Shape does not prove runtime decision semantics.</code></pre>
+            <div class="card-label">
+              <span>Input B</span> Mermaid + graph2agent {diagramExample.narrative_profile}
+            </div>
+            <pre class="compiled-context"><code>{compiledDiagramText.trimEnd()}</code></pre>
             <p class="made-explicit"><span aria-hidden="true">✓</span> Structure and limits are explicit</p>
           </article>
         </div>
@@ -201,33 +214,37 @@ Interpretation limits
             <p class="kicker">One compiler, four launch surfaces</p>
             <h2 id="how-title">Generate once. Keep every consumer current.</h2>
             <p class="activation-note">
-              Core <code>v0.2.1</code>, Action <code>v0.3.0</code>, Homebrew, and direct Debian downloads are public. MCP <code>v0.2.0</code> is live through npm on macOS and Linux; native Windows downloads are live on GitHub, while one-command npm activation on Windows is pending. The signed APT repository is staged but not live.
+              Core <code>{releaseVersion}</code>, Action <code>{releaseVersion}</code>, Homebrew,
+              and direct Debian downloads are public. MCP <code>{releaseVersion}</code> is live
+              through npm on macOS and Linux; native Windows downloads are live on GitHub, while
+              one-command npm activation on Windows is pending. The signed APT repository is
+              staged but not live.
             </p>
           </div>
           <ol class="surface-grid">
             <li>
               <span class="step">01</span>
               <h3>Paste one, or generate them all</h3>
-              <p>Install with Homebrew or a verified <a href="https://github.com/graph2agent/graph2agent/releases/tag/v0.2.1">amd64 or arm64 Debian package</a>. Paste one diagram for rich text on stdout, or put the repository update after your existing generators.</p>
+              <p>Install with Homebrew or a verified <a href={coreReleaseUrl}>amd64 or arm64 Debian package</a>. Paste one diagram for rich text on stdout, or put the repository update after your existing generators.</p>
               <code>brew install graph2agent/tap/graph2agent<br />graph2agent describe --profile interpreted-v3 -<br />make generate</code>
             </li>
             <li>
               <span class="step">02</span>
               <h3>Plug-and-play MCP</h3>
-              <p>On macOS and Linux, the live <a href="https://www.npmjs.com/package/graph2agent-mcp">npm package</a> gives an MCP-capable agent the tool without a manual native download. Windows users can use the verified native executables from the <a href="https://github.com/graph2agent/mcp/releases/tag/v0.2.0">v0.2.0 GitHub release</a>; one-command npm activation on Windows is pending.</p>
-              <code>npx -y graph2agent-mcp@0.2.0</code>
+              <p>On macOS and Linux, the live <a href="https://www.npmjs.com/package/graph2agent-mcp">npm package</a> gives an MCP-capable agent the tool without a manual native download. Windows users can use the verified native executables from the <a href={mcpReleaseUrl}>{releaseVersion} GitHub release</a>; one-command npm activation on Windows is pending.</p>
+              <code>npx -y graph2agent-mcp@{npmVersion}</code>
             </li>
             <li>
               <span class="step">03</span>
               <h3>Block stale merges</h3>
               <p>Make a read-only <code>graph2agent check .</code> job required before a pull request can merge.</p>
-              <code>uses: graph2agent/github-action/.github/workflows/check-markdown.yml@7c57998614ba579be55829423eaaa1262c35eff4<br />with:<br />&nbsp;&nbsp;graph2agent-version: v0.2.1</code>
+              <code>uses: graph2agent/github-action/.github/workflows/check-markdown.yml@{actionWorkflowRef}<br />with:<br />&nbsp;&nbsp;graph2agent-version: {releaseVersion}</code>
             </li>
             <li>
               <span class="step">04</span>
               <h3>Let the bot maintain it</h3>
               <p>Run daily, change only generated Markdown context, and reuse one focused refresh PR until it merges.</p>
-              <code>uses: graph2agent/github-action/.github/workflows/maintain-markdown.yml@7c57998614ba579be55829423eaaa1262c35eff4<br />with:<br />&nbsp;&nbsp;graph2agent-version: v0.2.1</code>
+              <code>uses: graph2agent/github-action/.github/workflows/maintain-markdown.yml@{actionWorkflowRef}<br />with:<br />&nbsp;&nbsp;graph2agent-version: {releaseVersion}</code>
             </li>
           </ol>
         </div>
@@ -308,7 +325,7 @@ Interpretation limits
         <div>
           <a class="button button-primary" href="https://github.com/graph2agent/graph2agent">Open graph2agent</a>
           <code>brew install graph2agent/tap/graph2agent</code>
-          <code>npx -y graph2agent-mcp@0.2.0</code>
+          <code>npx -y graph2agent-mcp@{npmVersion}</code>
         </div>
       </section>
     </main>
