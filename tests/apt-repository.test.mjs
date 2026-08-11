@@ -19,6 +19,9 @@ import { gunzipSync } from "node:zlib";
 
 const repositoryRoot = fileURLToPath(new URL("../", import.meta.url));
 const builder = join(repositoryRoot, "scripts", "build-apt-repository.sh");
+const release = JSON.parse(
+  await readFile(new URL("../src/data/release.json", import.meta.url), "utf8"),
+);
 
 function run(command, args, options = {}) {
   return spawnSync(command, args, {
@@ -276,9 +279,11 @@ test(
       0,
       `stdout:\n${built.stdout}\nstderr:\n${built.stderr}`,
     );
-    assert.match(
+    assert.ok(
+      built.stdout.includes(
+        `built signed APT repository for graph2agent ${release.version.slice(1)}-1`,
+      ),
       built.stdout,
-      /built signed APT repository for graph2agent 0\.2\.0-1/,
     );
 
     const releaseDirectory = join(output, "dists", "stable");
